@@ -1,0 +1,109 @@
+- error = @order.errors.include?(:order_no)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :order_no, :class => 'control-label'
+  .controls
+    =f.text_field :order_no, :class => 'form-control input-large input-with-feedback', :autofocus => true
+    %span.help-inline=error ? f.error_message_on(:order_no, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:no)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :no, :class => 'control-label'
+  .controls
+    =f.text_field :no, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:no, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:type_id)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :type_id, :class => 'control-label'
+  .controls
+    =f.text_field :type_id, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:type_id, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:order_status_id)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :order_status_id, :class => 'control-label'
+  .controls
+    =f.text_field :order_status_id, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:order_status_id, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:order_process_id)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :order_process_id, :class => 'control-label'
+  .controls
+    =f.text_field :order_process_id, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:order_process_id, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:department_id)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :department_id, :class => 'control-label'
+  .controls
+    =f.text_field :department_id, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:department_id, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:acter)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :acter, :class => 'control-label'
+  .controls
+    =f.text_field :acter, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:acter, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:level)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :level, :class => 'control-label'
+  .controls
+    =f.text_field :level, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:level, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:demand)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :demand, :class => 'control-label'
+  .controls
+    =f.text_field :demand, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:demand, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:acter_account)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :acter_account, :class => 'control-label'
+  .controls
+    =f.text_field :acter_account, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:acter_account, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:acter_pw)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :acter_pw, :class => 'control-label'
+  .controls
+    =f.text_field :acter_pw, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:acter_pw, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:wangwang)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :wangwang, :class => 'control-label'
+  .controls
+    =f.text_field :wangwang, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:wangwang, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:mobile)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :mobile, :class => 'control-label'
+  .controls
+    =f.text_field :mobile, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:mobile, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:qq)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :qq, :class => 'control-label'
+  .controls
+    =f.text_field :qq, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:qq, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:amount)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :amount, :class => 'control-label'
+  .controls
+    =f.text_field :amount, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:amount, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:paytype)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :paytype, :class => 'control-label'
+  .controls
+    =f.text_field :paytype, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:paytype, :class => 'text-error') : pat(:example)
+- error = @order.errors.include?(:memo)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label :memo, :class => 'control-label'
+  .controls
+    =f.text_field :memo, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:memo, :class => 'text-error') : pat(:example)
+
+.form-actions
+  =f.submit pat(:save), :class => 'btn btn-primary'
+  &nbsp;
+  =f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue'
+  &nbsp;
+  =link_to pat(:cancel), url(:orders, :index), :class => 'btn btn-default'

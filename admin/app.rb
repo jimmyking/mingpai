@@ -33,6 +33,7 @@ module Mingpai
     end
 
     access_control.roles_for :admin do |role|
+      role.project_module :orders, '/orders'
       role.project_module :departments, '/departments'
       role.project_module :games, '/games'
       role.project_module :steps, '/steps'
