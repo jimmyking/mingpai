@@ -1,0 +1,8 @@
+%ul.nav.nav-tabs
+  %li=link_to tag_icon(:list, pat(:list)), url(:games, :index)
+  %li=link_to tag_icon(:plus, pat(:new)), url(:games, :new)
+  %li.active=link_to tag_icon(:edit, pat(:edit)), url(:games, :edit, :id => @game.id)
+
+.tabs-content
+  = form_for :game, url(:games, :update, :id => @game.id), :method => :put, :class => 'form-horizontal' do |f|
+    =partial 'games/form', :locals => { :f => f }

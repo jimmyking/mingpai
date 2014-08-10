@@ -1,0 +1,7 @@
+%ul.nav.nav-tabs
+  %li=link_to tag_icon(:list, pat(:list)), url(:departments, :index, :game_id => @game.id)
+  %li.active=link_to tag_icon(:plus, pat(:new)), url(:departments, :new, :game_id => @game.id)
+
+.tabs-content
+  = form_for :department, url(:departments, :create, :game_id => @game.id), :class => 'form-horizontal' do |f|
+    =partial 'departments/form', :locals => { :f => f }
