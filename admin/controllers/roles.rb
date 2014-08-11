@@ -85,4 +85,8 @@ Mingpai::Admin.controllers :roles do
     end
     redirect url(:roles, :index)
   end
+
+  get :roles_menus, :with => :id do
+    
+  end
 end

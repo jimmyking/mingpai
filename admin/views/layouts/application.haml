@@ -23,7 +23,7 @@
                 =content_tag :button, tag_icon(:off), :type => :submit, :title => pat(:logout), :class => 'navbar-nav-form-link'
 
           %ul.nav.navbar-nav.pull-left
-            =partial 'layouts/nav'
+            =partial 'layouts/nav', :locals => { :current_account => @current_account }
 
     .container.main
       .main-wrapper

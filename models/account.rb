@@ -28,13 +28,24 @@ class Account < ActiveRecord::Base
     my_role = Role.find(role_id)
     my_menus = my_role.menus.order("parent_id,id")
     my_menus_group = []
-    my_menus.each do |item|
-      temp_parent = item.parent
-      temp_items = []
-      
-      temp = {:root => item.parent, :item => item}
-      
+    temp_parent = my_menus[0].parent
+    temp_items = []
+    for i in 0...my_menus.size
+      if temp_parent != my_menus[i].parent
+        temp = {:root => temp_parent, :items => temp_items}
+        my_menus_group.push temp
+        temp_parent = my_menus[i].parent
+        temp_items = []
+        temp_items.push my_menus[i]
+      else
+        temp_items.push my_menus[i]
+      end
+      if   i ==  my_menus.size-1
+        temp = {:root => temp_parent, :items => temp_items}
+        my_menus_group.push temp
+      end
     end
+    my_menus_group
   end
 
   def has_password?(password)

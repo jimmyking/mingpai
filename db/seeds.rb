@@ -7,12 +7,12 @@
 #
 
 menu1 = Menu.create(:name => "系统管理")
-menu2 = Menu.create(:name => "用户管理", :parent_id => menu1.id)
-menu3 = Menu.create(:name => "角色管理", :parent_id => menu1.id)
-menu4 = Menu.create(:name => "菜单管理", :parent_id => menu1.id)
+menu2 = Menu.create(:name => "用户管理",:url => "/accounts", :parent_id => menu1.id)
+menu3 = Menu.create(:name => "角色管理",:url => "/roles", :parent_id => menu1.id)
+menu4 = Menu.create(:name => "菜单管理",:url => "/menus", :parent_id => menu1.id)
 
 role = Role.new(:name => "管理员")
-role.menus = [menu1,menu2,menu3,menu4]
+role.menus = [menu2,menu3,menu4]
 role.save
 
 
