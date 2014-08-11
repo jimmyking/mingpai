@@ -1,0 +1,16 @@
+%li.dropdown
+  %a{:class => "dropdown-toggle", "data-toggle" => "dropdown", :href => "#"}
+    系统管理
+    %span.caret
+  %ul.list-menu.dropdown-menu
+    %li.list-menu-wrapper=link_to '用户管理', url("/accounts"), :class => 'list-menu-link'
+    %li.list-menu-wrapper=link_to '角色管理', url("#"), :class => 'list-menu-link'
+    %li.list-menu-wrapper=link_to '菜单管理', url("#"), :class => 'list-menu-link'
+%li.dropdown
+  %a{:class => "dropdown-toggle", "data-toggle" => "dropdown", :href => "#"}
+    业务管理
+    %span.caret
+  %ul.list-menu.dropdown-menu
+    %li.list-menu-wrapper=link_to '用户管理', url("#"), :class => 'list-menu-link'
+    %li.list-menu-wrapper=link_to '角色管理', url("#"), :class => 'list-menu-link'
+    %li.list-menu-wrapper=link_to '菜单管理', url("#"), :class => 'list-menu-link'

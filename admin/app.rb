@@ -32,14 +32,7 @@ module Mingpai
       role.allow   '/sessions'
     end
 
-    access_control.roles_for :admin do |role|
-      role.project_module :orders, '/orders'
-      role.project_module :departments, '/departments'
-      role.project_module :games, '/games'
-      role.project_module :steps, '/steps'
-      role.project_module :types, '/types'
-      role.project_module :accounts, '/accounts'
-    end
+    
 
     # Custom error management 
     error(403) { @title = "Error 403"; render('errors/403', :layout => :error) }

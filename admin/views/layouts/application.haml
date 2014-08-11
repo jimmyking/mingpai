@@ -23,9 +23,7 @@
                 =content_tag :button, tag_icon(:off), :type => :submit, :title => pat(:logout), :class => 'navbar-nav-form-link'
 
           %ul.nav.navbar-nav.pull-left
-            - project_modules.each do |project_module|
-              %li{:class => "navbar-module #{('active' if request.path_info =~ /^#{project_module.path}/)}"}
-                =link_to project_module.human_name, url(project_module.path)
+            =partial 'layouts/nav'
 
     .container.main
       .main-wrapper

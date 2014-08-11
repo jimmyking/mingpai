@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 6) do
+ActiveRecord::Schema.define(version: 8) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 6) do
     t.string   "email"
     t.string   "crypted_password"
     t.string   "role"
+    t.integer  "role_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -34,6 +35,20 @@ ActiveRecord::Schema.define(version: 6) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "menus", force: true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.integer  "sort"
+    t.integer  "parent_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "menus_roles", id: false, force: true do |t|
+    t.integer "role_id"
+    t.integer "menu_id"
   end
 
   create_table "orders", force: true do |t|
@@ -54,6 +69,12 @@ ActiveRecord::Schema.define(version: 6) do
     t.string   "amount"
     t.string   "paytype"
     t.string   "memo"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "roles", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,5 +1,6 @@
 class Account < ActiveRecord::Base
   attr_accessor :password, :password_confirmation
+  
 
   # Validations
   validates_presence_of     :email, :role
@@ -21,6 +22,19 @@ class Account < ActiveRecord::Base
   def self.authenticate(email, password)
     account = where("lower(email) = lower(?)", email).first if email.present?
     account && account.has_password?(password) ? account : nil
+  end
+  
+  def my_menus
+    my_role = Role.find(role_id)
+    my_menus = my_role.menus.order("parent_id,id")
+    my_menus_group = []
+    my_menus.each do |item|
+      temp_parent = item.parent
+      temp_items = []
+      
+      temp = {:root => item.parent, :item => item}
+      
+    end
   end
 
   def has_password?(password)
