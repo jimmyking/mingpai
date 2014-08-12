@@ -26,26 +26,22 @@
                       =hidden_field_tag :order_ids, :'data-delete-many-ids' => true
                       =submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small'
                       .btn.btn-default.btn-small.cancel=pat(:cancel)
-        %th.header= mat(:order, :id)
-        %th.header= mat(:order, :order_no)
-        %th.header= mat(:order, :no)
-        %th.header= mat(:order, :type_id)
-        %th.header= mat(:order, :order_status_id)
-        %th.header= mat(:order, :order_process_id)
-        %th.header= mat(:order, :department_id)
-        %th.header= mat(:order, :acter)
-        %th.header= mat(:order, :level)
-        %th.header= mat(:order, :demand)
-        %th.header= mat(:order, :acter_account)
-        %th.header= mat(:order, :acter_pw)
-        %th.header= mat(:order, :wangwang)
-        %th.header= mat(:order, :mobile)
+        %th.header= "订单号"
+        %th.header= "需求类型"
+        %th.header= "订单状态"
+        %th.header= "服务器"
+        %th.header= "角色"
+        %th.header= "初始等级"
+        %th.header= "需求" 
+        %th.header= "帐号" 
+        %th.header= "密码"
+        %th.header= "旺旺" 
+        %th.header= "电话" 
         %th.header= mat(:order, :qq)
-        %th.header= mat(:order, :amount)
-        %th.header= mat(:order, :paytype)
-        %th.header= mat(:order, :memo)
-        %th.header= mat(:order, :created_at)
-        %th.header= mat(:order, :updated_at)
+        %th.header= "金额"
+        %th.header= "支付方式"
+        %th.header= "备注" 
+        %th.header= "创建时间" 
         %th.header.list-row-action-header
 
     %tbody
@@ -53,13 +49,10 @@
         %tr.list-row
           %td.list-column.list-selectable
             =check_box_tag 'order_ids[]', :value => order.id, :class => 'list-selectable-checkbox'
-          %td.list-column=order.id
           %td.list-column=order.order_no
-          %td.list-column=order.no
-          %td.list-column=order.type_id
+          %td.list-column=order.type.name
           %td.list-column=order.order_status_id
-          %td.list-column=order.order_process_id
-          %td.list-column=order.department_id
+          %td.list-column=order.department.name
           %td.list-column=order.acter
           %td.list-column=order.level
           %td.list-column=order.demand
@@ -72,7 +65,6 @@
           %td.list-column=order.paytype
           %td.list-column=order.memo
           %td.list-column=time_ago_in_words order.created_at
-          %td.list-column=time_ago_in_words order.updated_at
           %td.list-column.list-row-action
             .list-row-action-wrapper
               =link_to tag_icon(:edit), :href => url(:orders, :edit, :id => order.id), :rel => :tooltip, :title => "#{pat(:edit)} order", :class => 'list-row-action-wrapper-link'
