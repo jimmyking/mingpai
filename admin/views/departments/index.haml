@@ -40,7 +40,7 @@
             =check_box_tag 'department_ids[]', :value => department.id, :class => 'list-selectable-checkbox'
           %td.list-column=department.id
           %td.list-column=department.name
-          %td.list-column=department.game_id
+          %td.list-column=department.game.name
           %td.list-column=time_ago_in_words department.created_at
           %td.list-column=time_ago_in_words department.updated_at
           %td.list-column.list-row-action

@@ -4,12 +4,8 @@
   .controls
     =f.text_field :name, :class => 'form-control input-large input-with-feedback', :autofocus => true
     %span.help-inline=error ? f.error_message_on(:name, :class => 'text-error') : pat(:example)
-- error = @department.errors.include?(:game_id)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :game_id, :class => 'control-label'
-  .controls
-    =f.text_field :game_id, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:game_id, :class => 'text-error') : pat(:example)
+    =f.hidden_field :game_id, :value => @game.id
+    
 
 .form-actions
   =f.submit pat(:save), :class => 'btn btn-primary'
