@@ -44,6 +44,7 @@
           %td.list-column.list-row-action
             .list-row-action-wrapper
               =link_to tag_icon(:edit), :href => url(:roles, :edit, :id => role.id), :rel => :tooltip, :title => "#{pat(:edit)} role", :class => 'list-row-action-wrapper-link'
+              =link_to tag_icon(:asterisk), :href => url(:roles, :roles_menus, :id => role.id), :rel => :tooltip, :title => "#{pat(:edit)} role", :class => 'list-row-action-wrapper-link'
               =link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} role", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
               .popover.list-row-action-popover-delete-one.left
                 .arrow

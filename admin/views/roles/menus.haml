@@ -1,0 +1,27 @@
+= form_tag url(:roles, :update_menus,:id => @role.id), :method => :put do
+
+  %table#list.table.table-striped.table-hover.table-condensed
+    %thead
+      %tr
+        %th.header.list-menu
+          .dropdown
+            %a.list-menu-toggle.dropdown-toggle{:href => '#', :'data-toggle' => :dropdown}
+              =tag_icon :magic
+              %span.caret
+            %ul.list-menu.dropdown-menu{:role => :menu}
+              %li.list-menu-wrapper=link_to tag_icon(:check, pat(:select_all)), '#', :id => 'select-all', :class => 'list-menu-link'
+              %li.list-menu-wrapper.list-menu-wrapper-disabled
+                =link_to tag_icon(:'check-empty', pat(:deselect_all)), '#', :id => 'deselect-all', :class => 'list-menu-link list-menu-link-disabled'
+        %th.header= "名称"
+        %th.header= "父级菜单"
+    %tbody
+      -@all_sub_menus.each do |m|
+      
+        %tr.list-row
+          %td.list-column.list-selectable
+            =check_box_tag 'menus_ids[]', :value => m.id,:class => 'list-selectable-checkbox',:checked => @my_menus.include?(m.id)
+          %td.list-column=m.name
+          %td.list-column=m.parent.name
+
+  =submit_tag pat("保存"), :class =>'btn'
+  

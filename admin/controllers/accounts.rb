@@ -7,12 +7,14 @@ Mingpai::Admin.controllers :accounts do
 
   get :new do
     @title = pat(:new_title, :model => 'account')
+    @roles = Role.all
     @account = Account.new
     render 'accounts/new'
   end
 
   post :create do
     @account = Account.new(params[:account])
+    @account.role = "admin"
     if @account.save
       @title = pat(:create_title, :model => "account #{@account.id}")
       flash[:success] = pat(:create_success, :model => 'Account')
@@ -26,6 +28,7 @@ Mingpai::Admin.controllers :accounts do
 
   get :edit, :with => :id do
     @title = pat(:edit_title, :model => "account #{params[:id]}")
+    @roles = Role.all
     @account = Account.find(params[:id])
     if @account
       render 'accounts/edit'

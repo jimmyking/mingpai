@@ -87,6 +87,28 @@ Mingpai::Admin.controllers :roles do
   end
 
   get :roles_menus, :with => :id do
+    @role = Role.find(params[:id])
+    @all_sub_menus = Menu.sub_scope.order("parent_id,id")
+    @my_menus = @role.menus.map { |m| m.id}
+    render 'roles/menus'
+  end
+  
+  put :update_menus, :with => :id do
+    
+    
+    
+    unless params[:menus_ids]
+      flash[:error] = "请给当前角色赋予权限"
+      redirect(url(:roles, :roles_menus,:id => params[:id]))
+    end
+    
+    new_menus = params[:menus_ids].map {|m| Menu.find(m)}
+    
+    role = Role.find(params[:id])
+    role.menus = new_menus
+    role.save
+    flash[:success] = "更新成功"
+    redirect(url(:roles, :roles_menus,:id => params[:id]))
     
   end
 end
