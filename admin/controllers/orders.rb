@@ -7,6 +7,8 @@ Mingpai::Admin.controllers :orders do
 
   get :new do
     @title = pat(:new_title, :model => 'order')
+    @departments = Game.first.departments
+    @types = Type.all
     @order = Order.new
     render 'orders/new'
   end

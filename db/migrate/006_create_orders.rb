@@ -3,7 +3,7 @@ class CreateOrders < ActiveRecord::Migration
     create_table :orders do |t|
       t.string :order_no   #订单号
       t.integer :no       #序号
-      t.integer :type_id   #类别
+      t.integer :type_id   #需求类别
       t.integer :order_status_id #状态
       t.integer :order_process_id #进度
       t.integer :department_id #服务器

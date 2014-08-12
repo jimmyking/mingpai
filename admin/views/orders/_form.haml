@@ -1,106 +1,83 @@
-- error = @order.errors.include?(:order_no)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :order_no, :class => 'control-label'
-  .controls
-    =f.text_field :order_no, :class => 'form-control input-large input-with-feedback', :autofocus => true
-    %span.help-inline=error ? f.error_message_on(:order_no, :class => 'text-error') : pat(:example)
-- error = @order.errors.include?(:no)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :no, :class => 'control-label'
-  .controls
-    =f.text_field :no, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:no, :class => 'text-error') : pat(:example)
-- error = @order.errors.include?(:type_id)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :type_id, :class => 'control-label'
-  .controls
-    =f.text_field :type_id, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:type_id, :class => 'text-error') : pat(:example)
-- error = @order.errors.include?(:order_status_id)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :order_status_id, :class => 'control-label'
-  .controls
-    =f.text_field :order_status_id, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:order_status_id, :class => 'text-error') : pat(:example)
-- error = @order.errors.include?(:order_process_id)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :order_process_id, :class => 'control-label'
-  .controls
-    =f.text_field :order_process_id, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:order_process_id, :class => 'text-error') : pat(:example)
-- error = @order.errors.include?(:department_id)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :department_id, :class => 'control-label'
-  .controls
-    =f.text_field :department_id, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:department_id, :class => 'text-error') : pat(:example)
 - error = @order.errors.include?(:acter)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :acter, :class => 'control-label'
+  =f.label "角色名", :class => 'control-label'
   .controls
     =f.text_field :acter, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:acter, :class => 'text-error') : pat(:example)
+    %span.help-inline=error ? f.error_message_on(:acter, :class => 'text-error') : ""
+- error = @order.errors.include?(:department_id)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label "所在服务器", :class => 'control-label'
+  .controls
+    =f.select :department_id,  :collection => @departments, :fields => [:name, :id], :class => 'form-control'
+    %span.help-inline=error ? f.error_message_on(:department_id, :class => 'text-error') : ""
+    
 - error = @order.errors.include?(:level)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :level, :class => 'control-label'
+  =f.label "角色初始等级", :class => 'control-label'
   .controls
     =f.text_field :level, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:level, :class => 'text-error') : pat(:example)
+    %span.help-inline=error ? f.error_message_on(:level, :class => 'text-error') : ""
 - error = @order.errors.include?(:demand)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :demand, :class => 'control-label'
+  =f.label "代练需求", :class => 'control-label'
   .controls
     =f.text_field :demand, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:demand, :class => 'text-error') : pat(:example)
+    %span.help-inline=error ? f.error_message_on(:demand, :class => 'text-error') : ""
+- error = @order.errors.include?(:type_id)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label "需求类别", :class => 'control-label'
+  .controls
+    =f.select :type_id, :collection => @types, :fields => [:name, :id], :class => 'form-control'
+    %span.help-inline=error ? f.error_message_on(:type_id, :class => 'text-error') : ""
 - error = @order.errors.include?(:acter_account)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :acter_account, :class => 'control-label'
+  =f.label "玩家账号", :class => 'control-label'
   .controls
     =f.text_field :acter_account, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:acter_account, :class => 'text-error') : pat(:example)
+    %span.help-inline=error ? f.error_message_on(:acter_account, :class => 'text-error') : ""
 - error = @order.errors.include?(:acter_pw)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :acter_pw, :class => 'control-label'
+  =f.label "玩家密码", :class => 'control-label'
   .controls
     =f.text_field :acter_pw, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:acter_pw, :class => 'text-error') : pat(:example)
+    %span.help-inline=error ? f.error_message_on(:acter_pw, :class => 'text-error') : ""
 - error = @order.errors.include?(:wangwang)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :wangwang, :class => 'control-label'
+  =f.label "旺旺", :class => 'control-label'
   .controls
     =f.text_field :wangwang, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:wangwang, :class => 'text-error') : pat(:example)
+    %span.help-inline=error ? f.error_message_on(:wangwang, :class => 'text-error') : ""
 - error = @order.errors.include?(:mobile)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :mobile, :class => 'control-label'
+  =f.label "联系电话", :class => 'control-label'
   .controls
     =f.text_field :mobile, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:mobile, :class => 'text-error') : pat(:example)
+    %span.help-inline=error ? f.error_message_on(:mobile, :class => 'text-error') : ""
 - error = @order.errors.include?(:qq)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :qq, :class => 'control-label'
+  =f.label "QQ号", :class => 'control-label'
   .controls
     =f.text_field :qq, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:qq, :class => 'text-error') : pat(:example)
+    %span.help-inline=error ? f.error_message_on(:qq, :class => 'text-error') : ""
 - error = @order.errors.include?(:amount)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :amount, :class => 'control-label'
+  =f.label "金额", :class => 'control-label'
   .controls
     =f.text_field :amount, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:amount, :class => 'text-error') : pat(:example)
+    %span.help-inline=error ? f.error_message_on(:amount, :class => 'text-error') : ""
 - error = @order.errors.include?(:paytype)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :paytype, :class => 'control-label'
+  =f.label "支付方式", :class => 'control-label'
   .controls
     =f.text_field :paytype, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:paytype, :class => 'text-error') : pat(:example)
+    %span.help-inline=error ? f.error_message_on(:paytype, :class => 'text-error') : ""
 - error = @order.errors.include?(:memo)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :memo, :class => 'control-label'
+  =f.label "备注", :class => 'control-label'
   .controls
     =f.text_field :memo, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:memo, :class => 'text-error') : pat(:example)
-
+    %span.help-inline=error ? f.error_message_on(:memo, :class => 'text-error') : ""
+%br
 .form-actions
   =f.submit pat(:save), :class => 'btn btn-primary'
   &nbsp;
