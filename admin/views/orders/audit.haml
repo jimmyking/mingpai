@@ -53,19 +53,20 @@
 .modal.fade{:id => "errorModel", :role => "dialog", :tabindex => "-1", :'aria-labelledby' => "myModalLabel", :'aria-hidden' => "true"}
   .modal-dialog
     .modal-content
-      .modal-header="订单异常"
-      .modal-body
-        %fieldset.control-group
-          =label_tag "异常类型", :class => 'control-label'
-          .controls
-            =text_field_tag :issus_type, :class => 'form-control input-large input-with-feedback', :autofocus => true
-            
-        %fieldset.control-group
-          =label_tag "异常备注", :class => 'control-label'
-          .controls
-            =text_field_tag :issus_memo, :class => 'form-control input-large input-with-feedback'
-            
-        =hidden_field_tag :model_id, :id => "model_id"
-      .modal-footer
-        %button.btn.btn-default{:type => "button",:"data-dismiss" => "modal"}="关闭"
-        %button.btn.btn-primary{:type => "button"}="保存"
+      = form_tag url(:orders, :to_issue), :method => :put do
+        .modal-header="订单异常"
+        .modal-body
+          %fieldset.control-group
+            =label_tag "异常类型", :class => 'control-label'
+            .controls
+              =select_tag :issus_type,  :collection => @issue_types, :fields => [:name, :id], :class => 'form-control', :autofocus => true
+              
+          %fieldset.control-group
+            =label_tag "异常备注", :class => 'control-label'
+            .controls
+              =text_field_tag :issus_memo, :class => 'form-control input-large input-with-feedback'
+              
+          =hidden_field_tag :model_id, :id => "model_id"
+        .modal-footer
+          %button.btn.btn-default{:type => "button",:"data-dismiss" => "modal"}="关闭"
+          =submit_tag "保存", :class =>' btn btn-primary'

@@ -1,7 +1,7 @@
 Mingpai::Admin.controllers :orders do
   get :index do
     @title = "Orders"
-    @orders = Order.all
+    @orders = Order.new_orders
     render 'orders/index'
   end
 
@@ -102,10 +102,9 @@ Mingpai::Admin.controllers :orders do
     redirect url(:orders, :index)
   end
   
-  
-  
   get :new_orders do
     @orders = Order.new_orders
+    @issue_types = IssueType.all
     render 'orders/audit'
   end
   
@@ -119,5 +118,23 @@ Mingpai::Admin.controllers :orders do
       flash[:error] = "审核失败"
       redirect url(:orders, :new_orders)
     end
+  end
+
+  put :to_issue do
+    order = Order.find(params[:model_id])
+    order.issue_type = IssueType.find(params[:issus_type])
+    order.issue_memo = params[:issus_memo]
+    if order.save
+      flash[:success] = "成功"
+      redirect url(:orders, :new_orders)
+    else
+      flash[:error] = "失败"
+      redirect url(:orders, :new_orders)
+    end
+  end
+
+  get :distribution do
+    @orders = Order.audited
+    render 'orders/distribution'
   end
 end

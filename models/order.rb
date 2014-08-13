@@ -3,12 +3,17 @@ class Order < ActiveRecord::Base
   belongs_to :step, foreign_key: "order_process_id"
   belongs_to :department
   belongs_to :status, foreign_key: "order_status_id"
+  belongs_to :issue_type
 
 
   before_create :init_orderno
   
   def self.new_orders
-    where("order_status_id = ?",1)
+    where("order_status_id = ? and issue_type_id IS NULL",1)
+  end
+
+  def self.audited
+    where("order_status_id = ? and issue_type_id IS NULL",2)
   end
 
   private

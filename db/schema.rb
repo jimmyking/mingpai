@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 9) do
+ActiveRecord::Schema.define(version: 10) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -37,6 +37,12 @@ ActiveRecord::Schema.define(version: 9) do
     t.datetime "updated_at"
   end
 
+  create_table "issue_types", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "menus", force: true do |t|
     t.string   "name"
     t.string   "url"
@@ -53,7 +59,6 @@ ActiveRecord::Schema.define(version: 9) do
 
   create_table "orders", force: true do |t|
     t.string   "order_no"
-    t.integer  "no"
     t.integer  "type_id"
     t.integer  "order_status_id"
     t.integer  "order_process_id"
@@ -68,6 +73,8 @@ ActiveRecord::Schema.define(version: 9) do
     t.string   "qq"
     t.string   "amount"
     t.string   "paytype"
+    t.integer  "issue_type_id"
+    t.string   "issue_memo"
     t.string   "memo"
     t.datetime "created_at"
     t.datetime "updated_at"

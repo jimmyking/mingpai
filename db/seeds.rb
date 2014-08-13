@@ -13,13 +13,14 @@ menu4 = Menu.create(:name => "菜单管理",:url => "/menus", :parent_id => menu
 menu5 = Menu.create(:name => "字典管理")
 menu6 = Menu.create(:name => "服务器管理",:url => "/games", :parent_id => menu5.id)
 menu7 = Menu.create(:name => "需求类型管理",:url => "/types", :parent_id => menu5.id)
-menu8 = Menu.create(:name => "订单管理")
-menu9 = Menu.create(:name => "新增订单",:url => "/orders", :parent_id => menu8.id)
-menu10 = Menu.create(:name => "订单审核",:url => "/orders/new_orders", :parent_id => menu8.id)
-
+menu8 = Menu.create(:name => "异常类型管理",:url => "/issue_types", :parent_id => menu5.id)
+menu9 = Menu.create(:name => "订单管理")
+menu10 = Menu.create(:name => "新增订单",:url => "/orders", :parent_id => menu9.id)
+menu11 = Menu.create(:name => "订单审核",:url => "/orders/new_orders", :parent_id => menu9.id)
+menu12 = Menu.create(:name => "订单分配",:url => "/orders/distribution", :parent_id => menu9.id)
 
 role = Role.new(:name => "管理员")
-role.menus = [menu2,menu3,menu4,menu6,menu7,menu9,menu10]
+role.menus = [menu2,menu3,menu4,menu6,menu7,menu8,menu10,menu11,menu12]
 role.save
 
 game = Game.create(:name => "剑网三")
@@ -33,6 +34,7 @@ step3 = Step.create(:name => "任务1", :sort => 2, :value => 5, :type_id => typ
 
 Status.create(:name => "新订单")
 Status.create(:name => "已审核")
+Status.create(:name => "已分团")
 
 
 

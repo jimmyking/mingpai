@@ -47,7 +47,7 @@
       // Select/deselect record on row's click
       list.find('.list-row').on('click', function(ev) {
         var checkbox, willBeChecked;
-        ev.stopPropagation();
+        //ev.stopPropagation();
 
         if (ev.currentTarget.tagName == 'TR') { 
           checkbox = $(this).find('.list-selectable-checkbox');
@@ -118,12 +118,21 @@
         var b_id = $(this).attr("data-b-id")
         $($(this).attr("data-target")).find('#model_id').val(b_id)
       });
-      
-      
     }
 
     // Autofocus first field with an error. (usability)
     var error_input;
     if (error_input = $('.has-error :input').first()) { error_input.focus(); }
+
+    $('.form_date').datetimepicker({
+        language:  'zh-CN',
+        weekStart: 1,
+        todayBtn:  1,
+    autoclose: 1,
+    todayHighlight: 1,
+    startView: 2,
+    minView: 2,
+    forceParse: 0
+    });
   });
 }(window.jQuery);
