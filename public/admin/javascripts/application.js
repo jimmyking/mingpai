@@ -109,6 +109,17 @@
 
         generalToggle();
       });
+      
+      //show modal
+      $('#show_modal').on('click', function(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        $($(this).attr("data-target")).modal();
+        var b_id = $(this).attr("data-b-id")
+        $($(this).attr("data-target")).find('#model_id').val(b_id)
+      });
+      
+      
     }
 
     // Autofocus first field with an error. (usability)

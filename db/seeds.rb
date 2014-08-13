@@ -15,10 +15,26 @@ menu6 = Menu.create(:name => "服务器管理",:url => "/games", :parent_id => m
 menu7 = Menu.create(:name => "需求类型管理",:url => "/types", :parent_id => menu5.id)
 menu8 = Menu.create(:name => "订单管理")
 menu9 = Menu.create(:name => "新增订单",:url => "/orders", :parent_id => menu8.id)
+menu10 = Menu.create(:name => "订单审核",:url => "/orders/new_orders", :parent_id => menu8.id)
+
 
 role = Role.new(:name => "管理员")
-role.menus = [menu2,menu3,menu4,menu6,menu7,menu9]
+role.menus = [menu2,menu3,menu4,menu6,menu7,menu9,menu10]
 role.save
+
+game = Game.create(:name => "剑网三")
+dep1 = Department.create(:name => "双梦",:game_id => game.id)
+dep2 = Department.create(:name => "幽月",:game_id => game.id)
+
+type = Type.create(:name => "90级")
+step1 = Step.create(:name => "20级别", :sort => 0, :value => 5, :type_id => type.id)
+step2 = Step.create(:name => "80级别", :sort => 1, :value => 5, :type_id => type.id) 
+step3 = Step.create(:name => "任务1", :sort => 2, :value => 5, :type_id => type.id)
+
+Status.create(:name => "新订单")
+Status.create(:name => "已审核")
+
+
 
 
 

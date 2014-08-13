@@ -25,10 +25,24 @@ Mingpai::Admin.controllers :orders do
       render 'orders/new'
     end
   end
+  
+  get :view, :with => :id do
+    
+    @order = Order.find(params[:id])
+  
+    if @order
+      render 'orders/view'
+    else
+      flash[:warning] = pat(:create_error, :model => 'order', :id => "#{params[:id]}")
+      halt 404
+    end
+  end
 
   get :edit, :with => :id do
     @title = pat(:edit_title, :model => "order #{params[:id]}")
     @order = Order.find(params[:id])
+    @departments = Game.first.departments
+    @types = Type.all
     if @order
       render 'orders/edit'
     else
@@ -86,5 +100,24 @@ Mingpai::Admin.controllers :orders do
       flash[:success] = pat(:destroy_many_success, :model => 'Orders', :ids => "#{ids.to_sentence}")
     end
     redirect url(:orders, :index)
+  end
+  
+  
+  
+  get :new_orders do
+    @orders = Order.new_orders
+    render 'orders/audit'
+  end
+  
+  put :audit, :with => :id do
+    order = Order.find(params[:id])
+    order.status = Status.find(2)
+    if order.save
+      flash[:success] = "审核成功"
+      redirect url(:orders, :new_orders)
+    else
+      flash[:error] = "审核失败"
+      redirect url(:orders, :new_orders)
+    end
   end
 end

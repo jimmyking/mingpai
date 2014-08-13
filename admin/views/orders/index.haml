@@ -3,55 +3,32 @@
   %li=link_to tag_icon(:plus, pat(:new)), url(:orders, :new)
 
 .tabs-content
-  %table#list.table.table-striped.table-hover.table-condensed
+  %table#list.table.table-bordered.table-hover.table-condensed
     %thead
-      %tr
-        %th.header.list-menu
-          .dropdown
-            %a.list-menu-toggle.dropdown-toggle{:href => '#', :'data-toggle' => :dropdown}
-              =tag_icon :magic
-              %span.caret
-            %ul.list-menu.dropdown-menu{:role => :menu}
-              %li.list-menu-wrapper=link_to tag_icon(:check, pat(:select_all)), '#', :id => 'select-all', :class => 'list-menu-link'
-              %li.list-menu-wrapper.list-menu-wrapper-disabled
-                =link_to tag_icon(:'check-empty', pat(:deselect_all)), '#', :id => 'deselect-all', :class => 'list-menu-link list-menu-link-disabled'
-              %li.list-menu-divider.divider
-              %li.list-menu-wrapper.list-menu-wrapper-disabled
-                =link_to tag_icon(:trash, pat(:delete_selected)), '#', :id => 'delete-selected', :class => 'list-menu-link list-menu-link-disabled'
-                .list-menu-popover-delete-selected.popover.right
-                  .arrow
-                  %h3.popover-title=pat(:delete_selected_title)
-                  .popover-content
-                    = form_tag url(:orders, :destroy_many), :method => :delete do
-                      =hidden_field_tag :order_ids, :'data-delete-many-ids' => true
-                      =submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small'
-                      .btn.btn-default.btn-small.cancel=pat(:cancel)
-        %th.header= "订单号"
-        %th.header= "需求类型"
-        %th.header= "订单状态"
-        %th.header= "服务器"
-        %th.header= "角色"
-        %th.header= "初始等级"
-        %th.header= "需求" 
-        %th.header= "帐号" 
-        %th.header= "密码"
-        %th.header= "旺旺" 
-        %th.header= "电话" 
-        %th.header= mat(:order, :qq)
-        %th.header= "金额"
-        %th.header= "支付方式"
-        %th.header= "备注" 
-        %th.header= "创建时间" 
-        %th.header.list-row-action-header
+      %th.header= "订单号"
+      %th.header= "需求类型"
+      %th.header= "订单状态"
+      %th.header= "服务器"
+      %th.header= "角色"
+      %th.header= "初始等级"
+      %th.header= "需求" 
+      %th.header= "帐号" 
+      %th.header= "密码"
+      %th.header= "旺旺" 
+      %th.header= "电话" 
+      %th.header= mat(:order, :qq)
+      %th.header= "金额"
+      %th.header= "支付方式"
+      %th.header= "备注" 
+      %th.header= "创建时间" 
+      %th.header.list-row-action-header
 
     %tbody
       -@orders.each do |order|
         %tr.list-row
-          %td.list-column.list-selectable
-            =check_box_tag 'order_ids[]', :value => order.id, :class => 'list-selectable-checkbox'
           %td.list-column=order.order_no
           %td.list-column=order.type.name
-          %td.list-column=order.order_status_id
+          %td.list-column=order.status.name
           %td.list-column=order.department.name
           %td.list-column=order.acter
           %td.list-column=order.level
@@ -64,7 +41,7 @@
           %td.list-column=order.amount
           %td.list-column=order.paytype
           %td.list-column=order.memo
-          %td.list-column=time_ago_in_words order.created_at
+          %td.list-column=order.created_at.strftime("%Y-%m-%d %H:%M")
           %td.list-column.list-row-action
             .list-row-action-wrapper
               =link_to tag_icon(:edit), :href => url(:orders, :edit, :id => order.id), :rel => :tooltip, :title => "#{pat(:edit)} order", :class => 'list-row-action-wrapper-link'
