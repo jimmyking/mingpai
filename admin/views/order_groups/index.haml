@@ -1,0 +1,60 @@
+%ul.nav.nav-tabs
+  %li.active=link_to tag_icon(:list, pat(:list)), url(:order_groups, :index)
+  %li=link_to tag_icon(:plus, pat(:new)), url(:order_groups, :new)
+
+.tabs-content
+  %table#list.table.table-striped.table-hover.table-condensed
+    %thead
+      %tr
+        %th.header.list-menu
+          .dropdown
+            %a.list-menu-toggle.dropdown-toggle{:href => '#', :'data-toggle' => :dropdown}
+              =tag_icon :magic
+              %span.caret
+            %ul.list-menu.dropdown-menu{:role => :menu}
+              %li.list-menu-wrapper=link_to tag_icon(:check, pat(:select_all)), '#', :id => 'select-all', :class => 'list-menu-link'
+              %li.list-menu-wrapper.list-menu-wrapper-disabled
+                =link_to tag_icon(:'check-empty', pat(:deselect_all)), '#', :id => 'deselect-all', :class => 'list-menu-link list-menu-link-disabled'
+              %li.list-menu-divider.divider
+              %li.list-menu-wrapper.list-menu-wrapper-disabled
+                =link_to tag_icon(:trash, pat(:delete_selected)), '#', :id => 'delete-selected', :class => 'list-menu-link list-menu-link-disabled'
+                .list-menu-popover-delete-selected.popover.right
+                  .arrow
+                  %h3.popover-title=pat(:delete_selected_title)
+                  .popover-content
+                    = form_tag url(:order_groups, :destroy_many), :method => :delete do
+                      =hidden_field_tag :order_group_ids, :'data-delete-many-ids' => true
+                      =submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small'
+                      .btn.btn-default.btn-small.cancel=pat(:cancel)
+        %th.header= mat(:order_group, :id)
+        %th.header= mat(:order_group, :name)
+        %th.header= mat(:order_group, :department_id)
+        %th.header= mat(:order_group, :step_id)
+        %th.header= mat(:order_group, :no)
+        %th.header= mat(:order_group, :created_at)
+        %th.header= mat(:order_group, :updated_at)
+        %th.header.list-row-action-header
+
+    %tbody
+      -@order_groups.each do |order_group|
+        %tr.list-row
+          %td.list-column.list-selectable
+            =check_box_tag 'order_group_ids[]', :value => order_group.id, :class => 'list-selectable-checkbox'
+          %td.list-column=order_group.id
+          %td.list-column=order_group.name
+          %td.list-column=order_group.department_id
+          %td.list-column=order_group.step_id
+          %td.list-column=order_group.no
+          %td.list-column=time_ago_in_words order_group.created_at
+          %td.list-column=time_ago_in_words order_group.updated_at
+          %td.list-column.list-row-action
+            .list-row-action-wrapper
+              =link_to tag_icon(:edit), :href => url(:order_groups, :edit, :id => order_group.id), :rel => :tooltip, :title => "#{pat(:edit)} order_group", :class => 'list-row-action-wrapper-link'
+              =link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} order_group", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
+              .popover.list-row-action-popover-delete-one.left
+                .arrow
+                %h3.popover-title=pat(:delete, :model => "order_group")
+                .popover-content
+                  = form_tag url(:order_groups, :destroy, :id => order_group.id), :method => :delete do
+                    =submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
+                    .btn.btn-default.btn-small.cancel=pat(:cancel)

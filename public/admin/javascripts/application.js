@@ -124,7 +124,21 @@
     var error_input;
     if (error_input = $('.has-error :input').first()) { error_input.focus(); }
 
-    $('.form_date').datetimepicker({
+    $('.form-date').on('click',function(ev){
+      $(this).datetimepicker({
+        language:  'zh-CN',
+        format: 'yyyy-mm-dd',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0
+      });
+    });
+    /*
+    $('.form-date').datetimepicker({
         language:  'zh-CN',
         weekStart: 1,
         todayBtn:  1,
@@ -134,5 +148,6 @@
     minView: 2,
     forceParse: 0
     });
+    */
   });
 }(window.jQuery);

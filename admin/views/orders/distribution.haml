@@ -18,11 +18,17 @@
                   .arrow
                   %h3.popover-title="分团"
                   .popover-content
-                    = form_tag url(:menus, :destroy_many), :method => :delete do
+                    = form_tag url(:orders, :distribed), :method => :put do
                       =hidden_field_tag :menu_ids, :'data-delete-many-ids' => true
                       =hidden_field_tag :group_date, :id =>"dtp_input2"
-                      .input-group.date.form-date{"data-date" => "", "date-date-format" => "yyyy-mm-dd", "data-link-field" => "dtp_input2", "data-link-format" => "yyyy-mm-dd"}
-                        %input{:class => "form-control", :size => "10", :type => "text", :readonly => true}
+                      .controls
+                        .input-append.date.form-date{"data-date" => "", "date-date-format" => "yyyy-mm-dd", "data-link-field" => "dtp_input2", "data-link-format" => "yyyy-mm-dd"}
+                          %input{:size => "10", :type => "text", :readonly => true}
+                          %span.add-on
+                            %i.icon-remove
+                          %span.add-on
+                            %i.icon-th
+                      %br
                       =submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small'
                       .btn.btn-default.btn-small.cancel=pat(:cancel)
         %th.header= "订单号"

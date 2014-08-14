@@ -37,6 +37,36 @@ Mingpai::Admin.controllers :accounts do
       halt 404
     end
   end
+  
+  get :self_edit, :with =>:id do
+    @title = pat(:edit_title, :model => "account #{params[:id]}")
+    @account = Account.find(params[:id])
+    if @account
+      render 'accounts/self_edit'
+    else
+      flash[:warning] = pat(:create_error, :model => 'account', :id => "#{params[:id]}")
+      halt 404
+    end
+  end
+  
+  put :self_update, :with => :id do
+    @title = pat(:update_title, :model => "account #{params[:id]}")
+    @account = Account.find(params[:id])
+    if @account
+      if @account.update_attributes(params[:account])
+        flash[:success] = pat(:update_success, :model => 'Account', :id =>  "#{params[:id]}")
+        params[:save_and_continue] ?
+          redirect(url("/")) :
+          redirect(url("/"))
+      else
+        flash.now[:error] = pat(:update_error, :model => 'account')
+        render 'accounts/self_edit'
+      end
+    else
+      flash[:warning] = pat(:update_warning, :model => 'account', :id => "#{params[:id]}")
+      halt 404
+    end
+  end
 
   put :update, :with => :id do
     @title = pat(:update_title, :model => "account #{params[:id]}")

@@ -19,6 +19,8 @@ gem 'haml'
 gem 'activerecord', '>= 3.1', :require => 'active_record'
 gem 'mysql2'
 
+gem 'faker'
+
 # Test requirements
 
 # Padrino Stable Gem

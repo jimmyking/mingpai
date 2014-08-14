@@ -137,4 +137,11 @@ Mingpai::Admin.controllers :orders do
     @orders = Order.audited
     render 'orders/distribution'
   end
+  
+  put :distribed do
+    puts params[:menu_ids]
+    puts params[:group_date]
+    @orders = Order.audited
+    render 'orders/distribution'
+  end
 end
