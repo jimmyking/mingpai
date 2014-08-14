@@ -11,21 +11,21 @@
     =f.select :department_id,  :collection => @departments, :fields => [:name, :id], :class => 'form-control'
     %span.help-inline=error ? f.error_message_on(:department_id, :class => 'text-error') : ""
     
-- error = @order.errors.include?(:level)
+- error = @order.errors.include?(:start_level)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
   =f.label "角色初始等级", :class => 'control-label'
   .controls
-    =f.text_field :level, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:level, :class => 'text-error') : ""
-- error = @order.errors.include?(:demand)
+    =f.text_field :start_level, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:start_level, :class => 'text-error') : ""
+- error = @order.errors.include?(:end_level)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
   =f.label "代练需求", :class => 'control-label'
   .controls
-    =f.text_field :demand, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:demand, :class => 'text-error') : ""
+    =f.text_field :end_level, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:end_level, :class => 'text-error') : ""
 - error = @order.errors.include?(:type_id)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label "需求类别", :class => 'control-label'
+  =f.label "订单类别", :class => 'control-label'
   .controls
     =f.select :type_id, :collection => @types, :fields => [:name, :id], :class => 'form-control'
     %span.help-inline=error ? f.error_message_on(:type_id, :class => 'text-error') : ""

@@ -4,18 +4,12 @@
   .controls
     =f.text_field :name, :class => 'form-control input-large input-with-feedback', :autofocus => true
     %span.help-inline=error ? f.error_message_on(:name, :class => 'text-error') : pat(:example)
-- error = @step.errors.include?(:sort)
+- error = @step.errors.include?(:level)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :sort, :class => 'control-label'
+  =f.label :level, :class => 'control-label'
   .controls
-    =f.text_field :sort, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:sort, :class => 'text-error') : pat(:example)
-- error = @step.errors.include?(:value)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :value, :class => 'control-label'
-  .controls
-    =f.text_field :value, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:value, :class => 'text-error') : pat(:example)
+    =f.text_field :level, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:level, :class => 'text-error') : pat(:example)
 
     =f.hidden_field :type_id, :value => @type.id
     

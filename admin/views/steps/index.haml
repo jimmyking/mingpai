@@ -28,8 +28,7 @@
                       .btn.btn-default.btn-small.cancel=pat(:cancel)
         %th.header= mat(:step, :id)
         %th.header= mat(:step, :name)
-        %th.header= mat(:step, :sort)
-        %th.header= mat(:step, :value)
+        %th.header= mat(:step, :level)
         %th.header= mat(:step, :type_id)
         %th.header= mat(:step, :created_at)
         %th.header= mat(:step, :updated_at)
@@ -42,8 +41,7 @@
             =check_box_tag 'step_ids[]', :value => step.id, :class => 'list-selectable-checkbox'
           %td.list-column=step.id
           %td.list-column=step.name
-          %td.list-column=step.sort
-          %td.list-column=step.value
+          %td.list-column=step.level
           %td.list-column=step.type.name
           %td.list-column=time_ago_in_words step.created_at
           %td.list-column=time_ago_in_words step.updated_at

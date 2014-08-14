@@ -1,9 +1,9 @@
 class Order < ActiveRecord::Base
   belongs_to :type
-  belongs_to :step, foreign_key: "order_process_id"
   belongs_to :department
   belongs_to :status, foreign_key: "order_status_id"
   belongs_to :issue_type
+  belongs_to :order_group
 
 
   before_create :init_orderno
