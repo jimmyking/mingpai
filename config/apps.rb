@@ -35,4 +35,6 @@ end
 # Mounts the core application for this project
 
 Padrino.mount("Mingpai::Admin", :app_file => Padrino.root('admin/app.rb')).to("/admin")
+Padrino.mount('Mingpai::Wx', :app_file => Padrino.root('wx/app.rb')).to('/wx')
 Padrino.mount('Mingpai::App', :app_file => Padrino.root('app/app.rb')).to('/')
+

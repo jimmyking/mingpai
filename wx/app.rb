@@ -1,10 +1,18 @@
 module Mingpai
-  class App < Padrino::Application
+  class Wx < Padrino::Application
     use ActiveRecord::ConnectionAdapters::ConnectionManagement
+    use Weixin::Middleware, 'abcd1234', '/wx'
     register Padrino::Mailer
     register Padrino::Helpers
 
     enable :sessions
+    
+    set :protection, false
+    set :protect_from_csrf, false
+    
+    configure do
+      set :wx_id, 'gh_5e4a0cbfe9e9'
+    end
 
     ##
     # Caching support.
@@ -64,7 +72,7 @@ module Mingpai
     #
     
     get "/" do
-        "Hello World!"
+        params[:echostr]
     end
   end
 end
