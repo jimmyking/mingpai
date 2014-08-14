@@ -1,4 +1,9 @@
 Mingpai::Admin.controllers :order_groups do
+
+  get :brush do
+    Order.where("type_id = ?", 2)
+  end
+
   get :index do
     @title = "Order_groups"
     @order_groups = OrderGroup.all

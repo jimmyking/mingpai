@@ -21,7 +21,7 @@ class Order < ActiveRecord::Base
     	now_date = Time.new.strftime("%Y%m%d")
     	today_order_size = Order.count+1
     	self.order_no = "#{now_date}%04d" %today_order_size
-      
-      self.status = Status.first
+       self.now_level = self.start_level
+       self.status = Status.first
     end
 end
