@@ -1,0 +1,81 @@
+.col-md-4.col-md-offset-11
+  =link_to "开始分团",url("#"),:class => "btn btn-info btn-brush-department"
+%br
+.tabs-content
+  %table#list.table.table-bordered.table-hover.table-condensed
+    %thead
+      %tr
+        %th.header.list-menu
+          .dropdown
+            %a.list-menu-toggle.dropdown-toggle{:href => '#', :'data-toggle' => :dropdown}
+              =tag_icon :magic
+              %span.caret
+            %ul.list-menu.dropdown-menu{:role => :menu}
+              %li.list-menu-wrapper=link_to tag_icon(:check, pat(:select_all)), '#', :id => 'select-all', :class => 'list-menu-link'
+              %li.list-menu-wrapper.list-menu-wrapper-disabled
+                =link_to tag_icon(:'check-empty', pat(:deselect_all)), '#', :id => 'deselect-all', :class => 'list-menu-link list-menu-link-disabled'
+        %th.header= "订单号"
+        %th.header= "订单类型"
+        %th.header= "订单状态"
+        %th.header= "服务器"
+        %th.header= "角色"
+        %th.header= "初始等级"
+        %th.header= "需求" 
+        %th.header= "帐号" 
+        %th.header= "密码"
+        %th.header= "旺旺" 
+        %th.header= "电话" 
+        %th.header= mat(:order, :qq)
+        %th.header= "金额"
+        %th.header= "支付方式"
+        %th.header= "备注" 
+        %th.header= "创建时间" 
+     
+
+    %tbody
+      -@orders.each do |order|
+        %tr.list-row
+          %td.list-column.list-selectable
+            =check_box_tag 'order_ids[]', :value => order.id, :class => 'list-selectable-checkbox'
+          %td.list-column=order.order_no
+          %td.list-column=order.type.name
+          %td.list-column=order.status.name
+          %td.list-column=order.department.name
+          %td.list-column=order.acter
+          %td.list-column=order.start_level
+          %td.list-column=order.end_level
+          %td.list-column=order.acter_account
+          %td.list-column=order.acter_pw
+          %td.list-column=order.wangwang
+          %td.list-column=order.mobile
+          %td.list-column=order.qq
+          %td.list-column=order.amount
+          %td.list-column=order.paytype
+          %td.list-column=order.memo
+          %td.list-column=order.created_at.strftime("%Y-%m-%d %H:%M")
+          
+.modal.fade{:id => "groupModel", :role => "dialog", :tabindex => "-1", :'aria-labelledby' => "myModalLabel", :'aria-hidden' => "true"}
+  .modal-dialog
+    .modal-content
+      = form_tag url(:order_groups, :brush_distribution), :method => :post do
+        .modal-header="订单分组"
+        .modal-body
+          %fieldset.control-group
+            =label_tag "服务器名称", :class => 'control-label'
+            .controls
+              =text_field_tag :department_name,:value => @department.name, :class => 'form-control input-large input-with-feedback'
+              
+          %fieldset.control-group
+            =label_tag "分组日期", :class => 'control-label'
+            .controls
+              .input-append
+                %input.date.form-control.form-date{"data-date" => "", "date-date-format" => "yyyy-mm-dd", "data-link-field" => "dtp_input2", "data-link-format" => "yyyy-mm-dd",:size => "10", :type => "text", :readonly => true}
+                
+          =hidden_field_tag :group_date, :id =>"dtp_input2"
+          =hidden_field_tag :type_id, :value => 2    
+          =hidden_field_tag :order_ids, :id => "order_ids"
+          =hidden_field_tag :department_id, :value => params[:department_id]
+        .modal-footer
+          %button.btn.btn-default{:type => "button",:"data-dismiss" => "modal"}="关闭"
+          =submit_tag "保存", :class =>' btn btn-primary'
+         

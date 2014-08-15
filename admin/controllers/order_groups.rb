@@ -1,8 +1,44 @@
 Mingpai::Admin.controllers :order_groups do
 
   get :brush do
-    Order.where("type_id = ?", 2)
+    @group_result = ActiveRecord::Base.connection.
+      execute("SELECT count(*) as num,t2.`name`,t2.`id` FROM `orders` t1,`departments` t2 where t1.`department_id`=t2.`id` AND t1.`order_status_id`=2 AND t1.`type_id` = 2  GROUP BY department_id")
+    render 'order_groups/brush'
   end
+  
+  get :brush_department, :with => :department_id do
+    @orders = Order.where("order_status_id = ? and department_id = ? and type_id = ? ",2,params[:department_id],2)
+    @department = Department.find(params[:department_id])
+    render 'order_groups/brush_department'
+  end
+  
+  post :brush_distribution do
+    department_id = params[:department_id]
+    order_ids = params[:order_ids]
+    order_id_array = order_ids.split(",")
+    group_date = params[:group_date]
+    
+    @group = OrderGroup.new(:name => group_date,:department_id => department_id, :type_id => 2)
+    
+    if @group.save
+      Order.find(order_id_array).each do |o|
+        o.update_attributes({"order_group_id" => @group.id,"order_status_id" => 3})
+      end
+      flash[:success] = "分组成功"
+      redirect url(:order_groups,:brush)
+    else
+      flash[:error] = "分组失败"
+      redirect url(:order_groups,:brush_department,:department_id => department_id)
+    end
+    
+  end
+  
+  get :brush_group do
+    @grops = OrderGroup.where("type_id = ? ",2)
+    render 'order_groups/brush_group'
+  end
+  
+=begin
 
   get :index do
     @title = "Order_groups"
@@ -90,4 +126,5 @@ Mingpai::Admin.controllers :order_groups do
     end
     redirect url(:order_groups, :index)
   end
+=end
 end

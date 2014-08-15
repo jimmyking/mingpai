@@ -118,6 +118,15 @@
         var b_id = $(this).attr("data-b-id")
         $($(this).attr("data-target")).find('#model_id').val(b_id)
       });
+      
+      $('.btn-brush-department').on('click',function(ev){
+        if (listCheckboxes.filter(':checked').length < 1){
+          alert("至少需要选择一个订单才能进行分团");
+        }else{
+          $("#groupModel").find('#order_ids').val(listCheckboxes.filter(':checked').map(function() { return $(this).val(); }).toArray().join(','))
+          $("#groupModel").modal();
+        }
+      });
     }
 
     // Autofocus first field with an error. (usability)

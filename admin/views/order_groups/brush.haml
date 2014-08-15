@@ -1,0 +1,14 @@
+.tabs-content
+  %table#list.table.table-striped.table-hover.table-condensed
+    %thead
+      %th.header= "服务器名称"
+      %th.header= "订单数量"
+      %th.header.list-row-action-header
+    %tbody
+      -@group_result.each do |r|
+        %tr.list-row
+          %td.list-column=r[1]
+          %td.list-column="#{r[0]} 笔"
+       
+          %td.list-column.list-row-action
+            =link_to tag_icon(:edit), :href => url(:order_groups, :brush_department, :department_id => r[2]), :rel => :tooltip, :title => "#{pat(:edit)} order_group", :class => 'list-row-action-wrapper-link'
