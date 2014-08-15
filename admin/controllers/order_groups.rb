@@ -34,8 +34,72 @@ Mingpai::Admin.controllers :order_groups do
   end
   
   get :brush_group do
-    @grops = OrderGroup.where("type_id = ? ",2)
+    @groups = OrderGroup.where("type_id = ? ",2)
+    
+    @groups.each do |g|
+      if g.now_level
+        g.progress= g.now_level.to_f/g.orders.maximum('end_level')*100
+      else
+        g.progress= 0
+      end
+    end
+    
     render 'order_groups/brush_group'
+  end
+  
+  get :brush_group_view, :with => :id do
+    @group = OrderGroup.find(params[:id])
+    @orders = @group.orders
+    start_level = @orders.minimum('now_level')
+    end_level = @orders.maximum('end_level')
+    level_range = start_level...end_level
+    @selectable_level = []
+    
+    level_range.to_a.each do |i|
+      @selectable_level.push [i,i]
+    end
+    render 'order_groups/brush_group_view'
+  end
+  
+  put :update_level, :with => :id do
+    group = OrderGroup.find(params[:id])
+    group.now_level = params[:level].to_i
+    if group.save
+      group.orders.each do |o|
+        if o.now_level < params[:level].to_i
+          o.now_level = params[:level].to_i
+          o.save
+        end
+      end
+      flash[:success] = "分组成功"
+    else
+      flash[:error] = "更新成功"
+    end
+    redirect url(:order_groups, :brush_group_view, :id => params[:id])
+  end
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  put :update_status, :with => :id do
+    group = OrderGroup.find(params[:id])
+    group.status = Status.find(params[:status_id])
+    group.now_level = 0
+    if group.save
+      group.orders.each do |o|
+        o.status=Status.find(params[:status_id])
+        o.save
+      end
+    end
+    redirect url(:order_groups, :brush_group)
   end
   
 =begin

@@ -6,6 +6,7 @@ class CreateOrderGroups < ActiveRecord::Migration
       t.integer :type_id
       t.integer :now_level
       t.integer :no
+      t.integer :status_id
       t.timestamps
     end
   end

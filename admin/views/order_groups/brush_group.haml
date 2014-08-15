@@ -1,0 +1,45 @@
+.tabs-content
+  %table#list.table.table-striped.table-hover.table-condensed
+    %thead
+      %tr
+        %th.header= "id"
+        %th.header= "时间"
+        %th.header= "服务器"
+        %th.header= "编号"
+        %th.header= "类型"
+        %th.header= "当前级别"
+        %th.header= "当前状态"
+        %th.header.list-row-action-header
+
+    %tbody
+      -@groups.each do |order_group|
+        %tr.list-row
+          %td.list-column{:rowspan => 2}=order_group.id
+          %td.list-column=order_group.name
+          %td.list-column=order_group.department.name
+          %td.list-column=order_group.no
+          %td.list-column=order_group.type.name
+          %td.list-column=order_group.now_level
+          %td.list-column=order_group.status.name
+          %td.list-column.list-row-action
+            .list-row-action-wrapper
+              =link_to tag_icon(:edit), :href => url(:order_groups, :brush_group_view, :id => order_group.id), :rel => :tooltip, :title => "#{pat(:edit)} order_group", :class =>'list-row-action-wrapper-link'
+              -if order_group.status.id < 4 then
+                =link_to tag_icon("ok-sign"), :rel => :tooltip, :title => "开团", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
+                .popover.list-row-action-popover-delete-one.left
+                  .arrow
+                  %h3.popover-title="开团"
+                  .popover-content
+                    = form_tag url(:order_groups, :update_status, :id => order_group.id), :method => :put do
+                      =hidden_field_tag :status_id, :value => 4
+                      =submit_tag "开团", :class =>'list-row-action-popover-delete-one-btn btn btn-success btn-small'
+                      .btn.btn-default.btn-small.cancel="取消"
+        %tr
+          %td.list-column{:colspan => 4,:style => "background-color: #f9f9f9" }
+            .progress
+              .progress-bar.progress-bar-success{:role => "progressbar", "aria-valuenow" => order_group.progress, "aria-valuemin" => 0, "aria-valuemax" => 100, :style => "width: #{order_group.progress}%"}
+                ="#{order_group.progress}%"
+          %td.list-column{:colspan => 4,:style => "background-color: #f9f9f9" }
+            -order_group.type.steps.each do |step|
+              .btn.btn-danger{:style => "width: 60px"}
+                =step.name
