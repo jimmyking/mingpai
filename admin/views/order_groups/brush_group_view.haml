@@ -7,7 +7,13 @@
           =select_tag :level,:options => @selectable_level, :class => 'form-control'
         .col-md-1
           =submit_tag "更新级别", :class =>'list-row-action-popover-delete-one-btn btn btn-success btn-small'
+    %br/
     .row
+      .col-md-12.text-right
+        -@type.steps.each do |s|
+          =form_tag url(:order_groups, :update_step, :id => @group.id), :method => :put do
+            =hidden_field_tag :step_id, :value =>s.id
+            =submit_tag s.name, :class =>'btn btn-danger ', :style => "width: 60px"
 .row
   .tabs-content
     %table#list.table.table-bordered.table-hover.table-condensed

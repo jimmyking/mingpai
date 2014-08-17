@@ -50,14 +50,17 @@ Mingpai::Admin.controllers :order_groups do
   get :brush_group_view, :with => :id do
     @group = OrderGroup.find(params[:id])
     @orders = @group.orders
+
+    @type = @group.type
+
     start_level = @orders.minimum('now_level')
     end_level = @orders.maximum('end_level')
     level_range = start_level...end_level
     @selectable_level = []
-    
     level_range.to_a.each do |i|
       @selectable_level.push [i,i]
     end
+
     render 'order_groups/brush_group_view'
   end
   
@@ -77,6 +80,27 @@ Mingpai::Admin.controllers :order_groups do
     end
     redirect url(:order_groups, :brush_group_view, :id => params[:id])
   end
+
+  put :update_step, :with => :id do
+    group = OrderGroup.find(params[:id])
+    task = OrderGroupTask.new(:order_group_id => params[:id],
+                                                        :step_id  => params[:step_id],
+                                                        :oper_id => current_account.id)
+    if task.save
+      group.orders.each do |o|
+        ot = OrderTask.new(:order_group_id => params[:id],
+                                     :group_id => group.id,
+                                     :step_id  => params[:step_id],
+                                     :oper_id => current_account.id)
+        ot.save
+      end
+      flash[:success] = "成功"
+    else
+      flash[:error] = "更新成功"
+    end
+    redirect url(:order_groups, :brush_group_view, :id => params[:id])
+  end
+  
   
   
   
