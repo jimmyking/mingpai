@@ -1,7 +1,11 @@
+%ol.breadcrumb
+  %li.active
+    =link_to "编辑订单"
+    
 %ul.nav.nav-tabs
-  %li=link_to tag_icon(:list, pat(:list)), url(:orders, :index)
-  %li=link_to tag_icon(:plus, pat(:new)), url(:orders, :new)
-  %li.active=link_to tag_icon(:edit, pat(:edit)), url(:orders, :edit, :id => @order.id)
+  %li=link_to tag_icon(:list, "列表"), url(:orders, :index)
+  %li=link_to tag_icon(:plus, "新增"), url(:orders, :new)
+  %li.active=link_to tag_icon(:edit, "编辑"), url(:orders, :edit, :id => @order.id)
 
 .tabs-content
   = form_for :order, url(:orders, :update, :id => @order.id), :method => :put, :class => 'form-horizontal' do |f|

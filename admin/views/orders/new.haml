@@ -1,6 +1,10 @@
+%ol.breadcrumb
+  %li.active
+    =link_to "新增订单"
+    
 %ul.nav.nav-tabs
-  %li=link_to tag_icon(:list, pat(:list)), url(:orders, :index)
-  %li.active=link_to tag_icon(:plus, pat(:new)), url(:orders, :new)
+  %li=link_to tag_icon(:list, "列表"), url(:orders, :index)
+  %li.active=link_to tag_icon(:plus, "新增"), url(:orders, :new)
 
 .tabs-content
   = form_for :order, url(:orders, :create), :class => 'form-horizontal' do |f|

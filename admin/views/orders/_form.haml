@@ -79,8 +79,6 @@
     %span.help-inline=error ? f.error_message_on(:memo, :class => 'text-error') : ""
 %br
 .form-actions
-  =f.submit pat(:save), :class => 'btn btn-primary'
+  =f.submit "保存", :class => 'btn btn-info', :name => 'save_and_continue'
   &nbsp;
-  =f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue'
-  &nbsp;
-  =link_to pat(:cancel), url(:orders, :index), :class => 'btn btn-default'
+  =link_to "取消", url(:orders, :index), :class => 'btn btn-default'
