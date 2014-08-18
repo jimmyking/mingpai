@@ -1,7 +1,11 @@
+%ol.breadcrumb
+  %li.active
+    =link_to "编辑异常类型"
+
 %ul.nav.nav-tabs
-  %li=link_to tag_icon(:list, pat(:list)), url(:issue_types, :index)
-  %li=link_to tag_icon(:plus, pat(:new)), url(:issue_types, :new)
-  %li.active=link_to tag_icon(:edit, pat(:edit)), url(:issue_types, :edit, :id => @issue_type.id)
+  %li=link_to tag_icon(:list, "列表"), url(:issue_types, :index)
+  %li=link_to tag_icon(:plus, "新增"), url(:issue_types, :new)
+  %li.active=link_to tag_icon(:edit, "编辑"), url(:issue_types, :edit, :id => @issue_type.id)
 
 .tabs-content
   = form_for :issue_type, url(:issue_types, :update, :id => @issue_type.id), :method => :put, :class => 'form-horizontal' do |f|

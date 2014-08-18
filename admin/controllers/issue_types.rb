@@ -58,11 +58,17 @@ Mingpai::Admin.controllers :issue_types do
     @title = "Issue_types"
     issue_type = IssueType.find(params[:id])
     if issue_type
-      if issue_type.destroy
-        flash[:success] = pat(:delete_success, :model => 'Issue_type', :id => "#{params[:id]}")
+      order_count = Order.where("issue_type_id = ? ",params[:id]).count
+      if order_count <= 0
+        if issue_type.destroy
+          flash[:success] = pat(:delete_success, :model => 'Issue_type', :id => "#{params[:id]}")
+        else
+          flash[:error] = pat(:delete_error, :model => 'issue_type')
+        end
       else
-        flash[:error] = pat(:delete_error, :model => 'issue_type')
+        flash[:error] = "当前存在对应类型的订单，无法删除"
       end
+      
       redirect url(:issue_types, :index)
     else
       flash[:warning] = pat(:delete_warning, :model => 'issue_type', :id => "#{params[:id]}")
