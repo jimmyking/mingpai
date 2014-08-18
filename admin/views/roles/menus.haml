@@ -1,5 +1,4 @@
 = form_tag url(:roles, :update_menus,:id => @role.id), :method => :put do
-
   %table#list.table.table-striped.table-hover.table-condensed
     %thead
       %tr
@@ -22,6 +21,6 @@
             =check_box_tag 'menus_ids[]', :value => m.id,:class => 'list-selectable-checkbox',:checked => @my_menus.include?(m.id)
           %td.list-column=m.name
           %td.list-column=m.parent.name
-
-  =submit_tag pat("保存"), :class =>'btn'
+  .col-md-1.col-md-offset-11
+    =submit_tag pat("保存"), :class =>'btn btn-info'
   

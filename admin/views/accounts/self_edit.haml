@@ -5,27 +5,27 @@
       =f.label "姓名", :class => 'control-label'
       .controls
         =f.text_field :name, :class => 'form-control input-large input-with-feedback', :autofocus => true
-        %span.help-inline=error ? f.error_message_on(:name, :class => 'text-error') : pat(:example)
+        %span.help-inline=error ? f.error_message_on(:name, :class => 'text-error') : ""
     - error = @account.errors.include?(:email)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
       =f.label :email, :class => 'control-label'
       .controls
         =f.text_field :email, :class => 'form-control input-large input-with-feedback'
-        %span.help-inline=error ? f.error_message_on(:email, :class => 'text-error') : pat(:example)
+        %span.help-inline=error ? f.error_message_on(:email, :class => 'text-error') : ""
     - error = @account.errors.include?(:password)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
       =f.label "密码", :class => 'control-label'
       .controls
         =f.password_field :password, :class => 'form-control input-large input-with-feedback'
-        %span.help-inline=error ? f.error_message_on(:password, :class => 'text-error') : pat(:example)
+        %span.help-inline=error ? f.error_message_on(:password, :class => 'text-error') : ""
     - error = @account.errors.include?(:password_confirmation)
     %fieldset.control-group{:class => error ? 'has-error' : ''}
       =f.label "确认密码", :class => 'control-label'
       .controls
         =f.password_field :password_confirmation, :class => 'form-control input-large input-with-feedback'
-        %span.help-inline=error ? f.error_message_on(:password_confirmation, :class => 'text-error') : pat(:example)
+        %span.help-inline=error ? f.error_message_on(:password_confirmation, :class => 'text-error') : ""
     
-
+    %br/
     .form-actions
       =f.submit "保存", :class => 'btn btn-primary'
       &nbsp;
