@@ -1,7 +1,7 @@
 %ul.nav.nav-tabs
-  %li=link_to tag_icon(:list, pat(:list)), url(:types, :index)
-  %li=link_to tag_icon(:plus, pat(:new)), url(:types, :new)
-  %li.active=link_to tag_icon(:edit, pat(:edit)), url(:types, :edit, :id => @type.id)
+  %li=link_to tag_icon(:list, "列表"), url(:types, :index)
+  %li=link_to tag_icon(:plus, "新增"), url(:types, :new)
+  %li.active=link_to tag_icon(:edit, "编辑"), url(:types, :edit, :id => @type.id)
 
 .tabs-content
   = form_for :type, url(:types, :update, :id => @type.id), :method => :put, :class => 'form-horizontal' do |f|

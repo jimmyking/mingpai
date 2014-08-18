@@ -60,11 +60,17 @@ Mingpai::Admin.controllers :types do
     @title = "Types"
     type = Type.find(params[:id])
     if type
-      if type.destroy
-        flash[:success] = pat(:delete_success, :model => 'Type', :id => "#{params[:id]}")
+      order_count = Order.where("type_id = ?",params[:id]).count
+      if order_count == 0
+        if type.destroy
+          flash[:success] = pat(:delete_success, :model => 'Type', :id => "#{params[:id]}")
+        else
+          flash[:error] = pat(:delete_error, :model => 'type')
+        end
       else
-        flash[:error] = pat(:delete_error, :model => 'type')
+        flash[:error] = "已存在有对应类型的订单，无法删除"
       end
+      
       redirect url(:types, :index)
     else
       flash[:warning] = pat(:delete_warning, :model => 'type', :id => "#{params[:id]}")

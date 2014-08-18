@@ -1,15 +1,9 @@
 - error = @type.errors.include?(:name)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :name, :class => 'control-label'
+  =f.label "类型名称", :class => 'control-label'
   .controls
     =f.text_field :name, :class => 'form-control input-large input-with-feedback', :autofocus => true
     %span.help-inline=error ? f.error_message_on(:name, :class => 'text-error') : ""
-- error = @type.errors.include?(:color)
-%fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :color, :class => 'control-label'
-  .controls
-    =f.select :color,  :options => @all_colors, :class => 'form-control'
-    %span.help-inline=error ? f.error_message_on(:color, :class => 'text-error') : ""
 %br
 .form-actions
 
