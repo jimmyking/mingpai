@@ -5,10 +5,15 @@ Mingpai::Admin.controllers :orders do
     render 'orders/index'
   end
 
+  post :index do
+    
+    render 'orders/index'
+  end
+
   get :new do
     @title = pat(:new_title, :model => 'order')
     @departments = Game.first.departments
-    @types = Type.all
+    @types = Type.where("id != 1")
     @order = Order.new
     render 'orders/new'
   end
@@ -21,6 +26,7 @@ Mingpai::Admin.controllers :orders do
       params[:save_and_continue] ? redirect(url(:orders, :index)) : redirect(url(:orders, :edit, :id => @order.id))
     else
       @title = pat(:create_title, :model => 'order')
+      @types = Type.where("id != 1")
       flash.now[:error] = pat(:create_error, :model => 'order')
       render 'orders/new'
     end
@@ -42,7 +48,7 @@ Mingpai::Admin.controllers :orders do
     @title = pat(:edit_title, :model => "order #{params[:id]}")
     @order = Order.find(params[:id])
     @departments = Game.first.departments
-    @types = Type.all
+    @types = Type.where("id != 1")
     if @order
       render 'orders/edit'
     else

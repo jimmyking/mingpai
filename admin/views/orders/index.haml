@@ -1,10 +1,32 @@
 %ol.breadcrumb
   %li.active
     =link_to "新增订单列表"
+.panel
+  = form_tag url(:orders, :index), :method => :post, :class => "form-horizontal" do
+    .form-group
+      =label_tag :order_no, :class => 'col-md-1 control-label'
+      .col-md-2
+        =text_field_tag :orderNo, :class => 'form-control'
+
+      =label_tag "ordertype", :class => 'col-md-1 control-label'
+      .col-md-2
+        =text_field_tag :type_id, :class => 'form-control'
+
+      =label_tag "department", :class => 'col-md-1 control-label'
+      .col-md-2
+        =text_field_tag :department_id, :class => 'form-control'
+
+      =label_tag "juese", :class => 'col-md-1 control-label'
+      .col-md-2
+        =text_field_tag :actor, :class => 'form-control'
+    .form-group
+      .col-md-2.col-md-offset-10
+        =submit_tag "search", :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
 
 %ul.nav.nav-tabs
   %li.active=link_to tag_icon(:list, "列表"), url(:orders, :index)
   %li=link_to tag_icon(:plus, "新增"), url(:orders, :new)
+
 
 .tabs-content
   %table#list.table.table-bordered.table-hover.table-condensed
