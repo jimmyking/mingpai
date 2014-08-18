@@ -1,3 +1,7 @@
+%ol.breadcrumb
+  %li.active
+    =link_to "订单类型列表"
+
 %ul.nav.nav-tabs
   %li.active=link_to tag_icon(:list, "列表"), url(:types, :index)
   %li=link_to tag_icon(:plus, "新增"), url(:types, :new)

@@ -1,22 +1,20 @@
 - error = @step.errors.include?(:name)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :name, :class => 'control-label'
+  =f.label "任务名称", :class => 'control-label'
   .controls
     =f.text_field :name, :class => 'form-control input-large input-with-feedback', :autofocus => true
-    %span.help-inline=error ? f.error_message_on(:name, :class => 'text-error') : pat(:example)
+    %span.help-inline=error ? f.error_message_on(:name, :class => 'text-error') : ""
 - error = @step.errors.include?(:level)
 %fieldset.control-group{:class => error ? 'has-error' : ''}
-  =f.label :level, :class => 'control-label'
+  =f.label "关联等级", :class => 'control-label'
   .controls
     =f.text_field :level, :class => 'form-control input-large input-with-feedback'
-    %span.help-inline=error ? f.error_message_on(:level, :class => 'text-error') : pat(:example)
+    %span.help-inline=error ? f.error_message_on(:level, :class => 'text-error') : ""
 
     =f.hidden_field :type_id, :value => @type.id
     
-
+%br/
 .form-actions
-  =f.submit pat(:save), :class => 'btn btn-primary'
+  =f.submit "保存", :class => 'btn btn-primary'
   &nbsp;
-  =f.submit pat(:save_and_continue), :class => 'btn btn-info', :name => 'save_and_continue'
-  &nbsp;
-  =link_to pat(:cancel), url(:steps, :index, :type_id => params[:type_id]), :class => 'btn btn-default'
+  =link_to "取消", url(:steps, :index, :type_id => params[:type_id]), :class => 'btn btn-default'

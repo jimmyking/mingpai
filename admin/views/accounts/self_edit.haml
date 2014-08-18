@@ -1,3 +1,7 @@
+%ol.breadcrumb
+  %li.active
+    =link_to "个人信息维护"
+
 .tabs-content
   = form_for :account, url(:accounts, :self_update, :id => @account.id), :method => :put, :class => 'form-horizontal' do |f|
     - error = @account.errors.include?(:name)

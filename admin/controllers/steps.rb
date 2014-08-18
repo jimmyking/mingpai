@@ -65,10 +65,16 @@ Mingpai::Admin.controllers :steps, :parent => :type do
     @title = "Steps"
     step = Step.find(params[:id])
     if step
-      if step.destroy
-        flash[:success] = pat(:delete_success, :model => 'Step', :id => "#{params[:id]}")
+      group_task_count = OrderGroupTask.where("step_id = ? ",params[:id]).count
+      order_task_count = OrderTask.where("step_id = ? ",params[:id]).count
+      if group_task_count <=0 || order_task_count <0
+        if step.destroy
+          flash[:success] = pat(:delete_success, :model => 'Step', :id => "#{params[:id]}")
+        else
+          flash[:error] = pat(:delete_error, :model => 'step')
+        end
       else
-        flash[:error] = pat(:delete_error, :model => 'step')
+        flash[:error] ="该任务已存在对应的关联订单，无法删除"
       end
       redirect url(:steps, :index, :type_id => @type.id)
     else

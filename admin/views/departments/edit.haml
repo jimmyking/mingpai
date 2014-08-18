@@ -1,3 +1,9 @@
+%ol.breadcrumb
+  %li
+    =link_to @game.name, url(:games, :index)
+  %li.active
+    =link_to "编辑服务器"
+
 %ul.nav.nav-tabs
   %li=link_to tag_icon(:list, "列表"), url(:departments, :index, :game_id => @game.id)
   %li=link_to tag_icon(:plus, "新增"), url(:departments, :new, :game_id => @game.id)

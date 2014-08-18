@@ -1,3 +1,7 @@
+%ol.breadcrumb
+  %li.active
+    =link_to "编辑用户"
+
 %ul.nav.nav-tabs
   %li=link_to tag_icon(:list, "列表"), url(:accounts, :index)
   %li=link_to tag_icon(:plus, "新增"), url(:accounts, :new)

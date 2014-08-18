@@ -1,3 +1,9 @@
+%ol.breadcrumb
+  %li
+    =link_to @role.name, url(:roles,:index)
+  %li.active
+    =link_to "菜单列表"
+
 = form_tag url(:roles, :update_menus,:id => @role.id), :method => :put do
   %table#list.table.table-striped.table-hover.table-condensed
     %thead
