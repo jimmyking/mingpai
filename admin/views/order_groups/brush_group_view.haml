@@ -2,18 +2,32 @@
   -if(@group.status.id == 4) 
     .row
       =form_tag url(:order_groups, :update_level, :id => @group.id), :method => :put do
-        .col-md-9
+        .col-md-3
+          ="团队名称:   #{@group.name} #{@group.department.name} #{@group.no} 团"
+          
+        .col-md-6
+          ="团队当前级别: #{@group.now_level}"
         .col-md-2.text-right
           =select_tag :level,:options => @selectable_level, :class => 'form-control'
         .col-md-1
           =submit_tag "更新级别", :class =>'list-row-action-popover-delete-one-btn btn btn-success btn-small'
     %br/
     .row
-      .col-md-12.text-right
-        -@type.steps.each do |s|
-          =form_tag url(:order_groups, :update_step, :id => @group.id), :method => :put do
-            =hidden_field_tag :step_id, :value =>s.id
-            =submit_tag s.name, :class =>'btn btn-danger ', :style => "width: 60px"
+      =form_tag url(:order_groups, :update_step, :id => @group.id), :method => :put do
+        .col-md-9
+          ="已完成的任务:"
+          -@group.tasks.each do |t|
+            =t.step.name
+        .col-md-2
+          =select_tag :step_id, :collection => @type.steps, :fields => [:name, :id], :class => 'form-control'
+        .col-md-1
+          =submit_tag "更新任务", :class =>'btn btn-danger'
+    %br/
+    .row
+      =form_tag url(:order_groups, :update_status, :id => @group.id), :method => :put do
+        .col-md-1.col-sm-offset-11
+          =hidden_field_tag :status_id, :value => 5
+          =submit_tag "团队结束", :class =>'btn btn-info'
 .row
   .tabs-content
     %table#list.table.table-bordered.table-hover.table-condensed

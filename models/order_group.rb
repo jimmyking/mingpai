@@ -2,6 +2,7 @@ class OrderGroup < ActiveRecord::Base
   belongs_to :department
   belongs_to :type
   has_many :orders
+  has_many :tasks, class_name: "OrderGroupTask", foreign_key: "group_id"
   belongs_to :status
 
   before_create :init_groupno

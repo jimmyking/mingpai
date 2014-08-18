@@ -34,7 +34,7 @@ Mingpai::Admin.controllers :order_groups do
   end
   
   get :brush_group do
-    @groups = OrderGroup.where("type_id = ? ",2)
+    @groups = OrderGroup.where("type_id = ? and status_id in (3,4)",2)
     
     @groups.each do |g|
       if g.now_level
@@ -83,13 +83,13 @@ Mingpai::Admin.controllers :order_groups do
 
   put :update_step, :with => :id do
     group = OrderGroup.find(params[:id])
-    task = OrderGroupTask.new(:order_group_id => params[:id],
+    task = OrderGroupTask.new(:group_id => params[:id],
                                                         :step_id  => params[:step_id],
                                                         :oper_id => current_account.id)
     if task.save
       group.orders.each do |o|
-        ot = OrderTask.new(:order_group_id => params[:id],
-                                     :group_id => group.id,
+        ot = OrderTask.new(:group_id => params[:id],
+                                     :order_id => o.id,
                                      :step_id  => params[:step_id],
                                      :oper_id => current_account.id)
         ot.save
@@ -116,7 +116,9 @@ Mingpai::Admin.controllers :order_groups do
   put :update_status, :with => :id do
     group = OrderGroup.find(params[:id])
     group.status = Status.find(params[:status_id])
-    group.now_level = 0
+    if group.status == 4
+      group.now_level = 0
+    end
     if group.save
       group.orders.each do |o|
         o.status=Status.find(params[:status_id])

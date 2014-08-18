@@ -1,6 +1,6 @@
 %ul.nav.nav-tabs
-  %li.active=link_to tag_icon(:list, pat(:list)), url(:accounts, :index)
-  %li=link_to tag_icon(:plus, pat(:new)), url(:accounts, :new)
+  %li.active=link_to tag_icon(:list, "列表"), url(:accounts, :index)
+  %li=link_to tag_icon(:plus, "新增"), url(:accounts, :new)
 
 .tabs-content
   %table#list.table.table-striped.table-hover.table-condensed
@@ -27,8 +27,7 @@
                       =submit_tag pat(:delete), :class =>'list-menu-popover-delete-selected-btn btn btn-danger btn-small'
                       .btn.btn-default.btn-small.cancel=pat(:cancel)
         %th.header= mat(:account, :id)
-        %th.header= mat(:account, :name)
-        %th.header= mat(:account, :surname)
+        %th.header= "姓名"
         %th.header= mat(:account, :email)
         %th.header.list-row-action-header
 
@@ -39,16 +38,8 @@
             =check_box_tag 'account_ids[]', :value => account.id, :class => 'list-selectable-checkbox'
           %td.list-column=account.id
           %td.list-column=account.name
-          %td.list-column=account.surname
           %td.list-column=account.email
           %td.list-column.list-row-action
             .list-row-action-wrapper
               =link_to tag_icon(:edit), :href => url(:accounts, :edit, :id => account.id), :rel => :tooltip, :title => "#{pat(:edit)} account", :class => 'list-row-action-wrapper-link'
-              =link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} account", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
-              .popover.list-row-action-popover-delete-one.left
-                .arrow
-                %h3.popover-title=pat(:delete, :model => "account")
-                .popover-content
-                  = form_tag url(:accounts, :destroy, :id => account.id), :method => :delete do
-                    =submit_tag pat(:delete), :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
-                    .btn.btn-default.btn-small.cancel=pat(:cancel)
+             

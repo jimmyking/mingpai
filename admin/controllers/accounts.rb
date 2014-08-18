@@ -22,6 +22,7 @@ Mingpai::Admin.controllers :accounts do
     else
       @title = pat(:create_title, :model => 'account')
       flash.now[:error] = pat(:create_error, :model => 'account')
+      @roles = Role.all
       render 'accounts/new'
     end
   end

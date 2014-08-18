@@ -40,6 +40,6 @@
               .progress-bar.progress-bar-success{:role => "progressbar", "aria-valuenow" => order_group.progress, "aria-valuemin" => 0, "aria-valuemax" => 100, :style => "width: #{order_group.progress}%"}
                 ="#{order_group.progress}%"
           %td.list-column{:colspan => 4,:style => "background-color: #f9f9f9" }
-            -order_group.type.steps.each do |step|
+            -order_group.tasks.each do |t|
               .btn.btn-danger{:style => "width: 60px"}
-                =step.name
+                =t.step.name

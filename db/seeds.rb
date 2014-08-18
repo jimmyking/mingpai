@@ -38,6 +38,7 @@ Status.create(:name => "新订单")
 Status.create(:name => "已审核")
 Status.create(:name => "已分团")
 Status.create(:name => "已开团")
+Status.create(:name => "团结束")
 
 
 
