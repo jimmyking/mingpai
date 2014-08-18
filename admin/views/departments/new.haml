@@ -1,6 +1,6 @@
 %ul.nav.nav-tabs
-  %li=link_to tag_icon(:list, pat(:list)), url(:departments, :index, :game_id => @game.id)
-  %li.active=link_to tag_icon(:plus, pat(:new)), url(:departments, :new, :game_id => @game.id)
+  %li=link_to tag_icon(:list, "列表"), url(:departments, :index, :game_id => @game.id)
+  %li.active=link_to tag_icon(:plus,  "新增"), url(:departments, :new, :game_id => @game.id)
 
 .tabs-content
   = form_for :department, url(:departments, :create, :game_id => @game.id), :class => 'form-horizontal' do |f|
