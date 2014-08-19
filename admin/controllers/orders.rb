@@ -1,14 +1,21 @@
 Mingpai::Admin.controllers :orders do
   get :index do
-    @title = "Orders"
-    @orders = Order.new_orders
+    empty_type = Type.new({:name => ""})
+    @types = Type.where("id != 1").to_a.insert 0, empty_type
+    
+    empty_department = Department.new({:name => ""})
+    @departments = Department.all.to_a.insert 0, empty_department
+    
+    if params[:q] 
+    else
+      params[:q]={}
+    end
+    params[:q][:order_status_id_eq] = 1
+    
+    @orders = Order.search(params[:q]).result
     render 'orders/index'
   end
 
-  post :index do
-    
-    render 'orders/index'
-  end
 
   get :new do
     @title = pat(:new_title, :model => 'order')
@@ -109,7 +116,19 @@ Mingpai::Admin.controllers :orders do
   end
   
   get :new_orders do
-    @orders = Order.new_orders
+    empty_type = Type.new({:name => ""})
+    @types = Type.where("id != 1").to_a.insert 0, empty_type
+    
+    empty_department = Department.new({:name => ""})
+    @departments = Department.all.to_a.insert 0, empty_department
+    
+    if params[:q] 
+    else
+      params[:q]={}
+    end
+    params[:q][:order_status_id_eq] = 1
+    
+    @orders = Order.search(params[:q]).result
     @issue_types = IssueType.all
     render 'orders/audit'
   end

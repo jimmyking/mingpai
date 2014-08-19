@@ -2,26 +2,26 @@
   %li.active
     =link_to "新增订单列表"
 .panel
-  = form_tag url(:orders, :index), :method => :post, :class => "form-horizontal" do
+  = form_tag url(:orders, :index), :method => :get, :class => "form-horizontal" do
     .form-group
-      =label_tag :order_no, :class => 'col-md-1 control-label'
+      =label_tag "订单号", :class => 'col-md-1 control-label'
       .col-md-2
-        =text_field_tag :orderNo, :class => 'form-control'
+        =text_field_tag "q[order_no_eq]", :class => 'form-control'
 
-      =label_tag "ordertype", :class => 'col-md-1 control-label'
+      =label_tag "订单类型", :class => 'col-md-1 control-label'
       .col-md-2
-        =text_field_tag :type_id, :class => 'form-control'
+        =select_tag "q[type_id_eq]", :collection => @types, :fields => [:name, :id], :class => 'form-control'
 
-      =label_tag "department", :class => 'col-md-1 control-label'
+      =label_tag "服务器", :class => 'col-md-1 control-label'
       .col-md-2
-        =text_field_tag :department_id, :class => 'form-control'
+        =select_tag "q[department_id_eq]", :collection => @departments, :fields => [:name, :id], :class => 'form-control'
 
-      =label_tag "juese", :class => 'col-md-1 control-label'
+      =label_tag "角色", :class => 'col-md-1 control-label'
       .col-md-2
-        =text_field_tag :actor, :class => 'form-control'
+        =text_field_tag "q[acter_cont]", :class => 'form-control'
     .form-group
       .col-md-2.col-md-offset-10
-        =submit_tag "search", :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
+        =submit_tag "搜索", :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
 
 %ul.nav.nav-tabs
   %li.active=link_to tag_icon(:list, "列表"), url(:orders, :index)

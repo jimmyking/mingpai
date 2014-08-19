@@ -1,3 +1,29 @@
+%ol.breadcrumb
+  %li.active
+    =link_to "订单审核列表"
+
+.panel
+  = form_tag url(:orders, :new_orders), :method => :get, :class => "form-horizontal" do
+    .form-group
+      =label_tag "订单号", :class => 'col-md-1 control-label'
+      .col-md-2
+        =text_field_tag "q[order_no_eq]", :class => 'form-control'
+
+      =label_tag "订单类型", :class => 'col-md-1 control-label'
+      .col-md-2
+        =select_tag "q[type_id_eq]", :collection => @types, :fields => [:name, :id], :class => 'form-control'
+
+      =label_tag "服务器", :class => 'col-md-1 control-label'
+      .col-md-2
+        =select_tag "q[department_id_eq]", :collection => @departments, :fields => [:name, :id], :class => 'form-control'
+
+      =label_tag "角色", :class => 'col-md-1 control-label'
+      .col-md-2
+        =text_field_tag "q[acter_cont]", :class => 'form-control'
+    .form-group
+      .col-md-2.col-md-offset-10
+        =submit_tag "搜索", :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
+    
 .tabs-content
   %table#list.table.table-bordered.table-hover.table-condensed
     %thead

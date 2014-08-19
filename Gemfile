@@ -20,6 +20,7 @@ gem 'activerecord', '>= 3.1', :require => 'active_record'
 gem 'mysql2'
 gem 'rack-weixin'
 gem 'faker'
+gem 'ransack'
 
 # Test requirements
 
