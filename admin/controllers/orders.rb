@@ -28,6 +28,7 @@ Mingpai::Admin.controllers :orders do
   post :create do
     @order = Order.new(params[:order])
     if @order.save
+      OrderProcess.create({"order_id" => @order.id, "operator_id" => current_account.id, "remark" => "新增订单"})
       @title = pat(:create_title, :model => "order #{@order.id}")
       flash[:success] = pat(:create_success, :model => 'Order')
       params[:save_and_continue] ? redirect(url(:orders, :index)) : redirect(url(:orders, :edit, :id => @order.id))
@@ -69,6 +70,7 @@ Mingpai::Admin.controllers :orders do
     @order = Order.find(params[:id])
     if @order
       if @order.update_attributes(params[:order])
+        OrderProcess.create({"order_id" => @order.id, "operator_id" => current_account.id, "remark" => "修改订单"})
         flash[:success] = pat(:update_success, :model => 'Order', :id =>  "#{params[:id]}")
         params[:save_and_continue] ?
           redirect(url(:orders, :index)) :
@@ -137,6 +139,7 @@ Mingpai::Admin.controllers :orders do
     order = Order.find(params[:id])
     order.status = Status.find(2)
     if order.save
+      OrderProcess.create({"order_id" => order.id, "operator_id" => current_account.id, "remark" => "审核订单"})
       flash[:success] = "审核成功"
       redirect url(:orders, :new_orders)
     else
@@ -147,9 +150,11 @@ Mingpai::Admin.controllers :orders do
 
   put :to_issue do
     order = Order.find(params[:model_id])
+    order.type = Type.first
     order.issue_type = IssueType.find(params[:issus_type])
     order.issue_memo = params[:issus_memo]
     if order.save
+      OrderProcess.create({"order_id" => order.id, "operator_id" => current_account.id, "remark" => "修改订单为异常订单"})
       flash[:success] = "成功"
       redirect url(:orders, :new_orders)
     else

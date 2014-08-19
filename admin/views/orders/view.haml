@@ -49,4 +49,6 @@
     %tr.list-row
       %td.list-column="备注"
       %td.list-column=@order.memo
+      
+=partial 'orders/process', :locals => { :processes => @order.processes }
     

@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
   belongs_to :status, foreign_key: "order_status_id"
   belongs_to :issue_type
   belongs_to :order_group
+  has_many :processes, class_name: "OrderProcess", foreign_key: "order_id"
 
 
   before_create :init_orderno

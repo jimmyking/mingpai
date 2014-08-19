@@ -68,5 +68,7 @@
           %td.list-column.list-row-action
             .list-row-action-wrapper
               =link_to tag_icon(:edit), :href => url(:orders, :edit, :id => order.id), :rel => :tooltip, :title => "查看", :class => 'list-row-action-wrapper-link'
+              =link_to tag_icon(:file), :href => url(:orders, :view, :id => order.id), :rel => :tooltip, :title => "查看", :class => 'list-row-action-wrapper-link'
+              
              
              

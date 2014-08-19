@@ -1,0 +1,15 @@
+.row
+  ="操作记录"
+  %table#list.table.table-bordered.table-hover.table-condensed
+    %thead
+      %th.header= "id"
+      %th.header= "操作人"
+      %th.header= "备注"
+      %th.header= "操作时间"
+    %tbody
+      -processes.each do |process|
+        %tr.list-row
+          %td.list-column=process.id
+          %td.list-column=process.operator.name
+          %td.list-column=process.remark
+          %td.list-column=process.created_at.strftime("%Y-%m-%d %H:%M")

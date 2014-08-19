@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 13) do
+ActiveRecord::Schema.define(version: 15) do
 
   create_table "accounts", force: true do |t|
     t.string   "name"
@@ -57,6 +57,14 @@ ActiveRecord::Schema.define(version: 13) do
     t.integer "menu_id"
   end
 
+  create_table "order_group_processes", force: true do |t|
+    t.integer  "group_id"
+    t.integer  "operator_id"
+    t.string   "remark"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "order_group_tasks", force: true do |t|
     t.integer  "group_id"
     t.integer  "step_id"
@@ -72,6 +80,14 @@ ActiveRecord::Schema.define(version: 13) do
     t.integer  "now_level"
     t.integer  "no"
     t.integer  "status_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "order_processes", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "operator_id"
+    t.string   "remark"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
