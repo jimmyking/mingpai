@@ -157,6 +157,18 @@ Mingpai::Admin.controllers :orders do
       redirect url(:orders, :new_orders)
     end
   end
+  
+  get :issue_orders do
+    empty_department = Department.new({:name => ""})
+    @departments = Department.all.to_a.insert 0, empty_department
+    if params[:q] 
+    else
+      params[:q]={}
+    end
+    params[:q][:type_id_eq] = 1
+    @orders = Order.search(params[:q]).result
+    render 'orders/issue_orders'
+  end
 
   get :distribution do
     @orders = Order.audited

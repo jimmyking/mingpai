@@ -20,9 +20,10 @@ menu11 = Menu.create(:name => "订单审核",:url => "/orders/new_orders", :pare
 menu12 = Menu.create(:name => "刷怪订单分配",:url => "/order_groups/brush", :parent_id => menu9.id)
 menu13 = Menu.create(:name => "任务订单分配",:url => "/order_groups/task", :parent_id => menu9.id)
 menu14 = Menu.create(:name => "刷怪团处理",:url => "/order_groups/brush_group", :parent_id => menu9.id)
+menu15 = Menu.create(:name => "异常订单管理",:url => "/orders/issue_orders", :parent_id => menu9.id)
 
 role = Role.new(:name => "管理员")
-role.menus = [menu2,menu3,menu4,menu6,menu7,menu8,menu10,menu11,menu12,menu13,menu14]
+role.menus = [menu2,menu3,menu4,menu6,menu7,menu8,menu10,menu11,menu12,menu13,menu14,menu15]
 role.save
 
 game = Game.create(:name => "剑网三")
