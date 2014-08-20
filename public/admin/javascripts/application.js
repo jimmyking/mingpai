@@ -111,7 +111,7 @@
       });
       
       //show modal
-      $('#show_modal').on('click', function(ev) {
+      $('.show_modal').on('click', function(ev) {
         ev.preventDefault();
         ev.stopPropagation();
         $($(this).attr("data-target")).modal();
@@ -127,6 +127,12 @@
           $("#groupModel").modal();
         }
       });
+      $('.btn-to-group').on('click',function(ev){
+          var order_id = $(this).attr("data-order-id")
+          $("#gotogroupModel").find('#order_id').val(order_id)
+          $("#gotogroupModel").modal();
+      });
+
     }
 
     // Autofocus first field with an error. (usability)

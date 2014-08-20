@@ -75,7 +75,7 @@
                   = form_tag url(:orders, :audit, :id => order.id), :method => :put do
                     =submit_tag "审核通过", :class =>'list-row-action-popover-delete-one-btn btn btn-success btn-small'
                     .btn.btn-default.btn-small.cancel="取消"
-              =link_to tag_icon("question-sign"), :rel => :tooltip, :title => "异常", :"data-toggle" => "modal", :"data-b-id" => order.id, :"data-target" => "#errorModel", :class => 'list-row-action-wrapper-link', :id => "show_modal"
+              =link_to tag_icon("question-sign"), :rel => :tooltip, :title => "异常", :"data-toggle" => "modal", :"data-b-id" => order.id, :"data-target" => "#errorModel", :class => 'list-row-action-wrapper-link show_modal'
 .modal.fade{:id => "errorModel", :role => "dialog", :tabindex => "-1", :'aria-labelledby' => "myModalLabel", :'aria-hidden' => "true"}
   .modal-dialog
     .modal-content

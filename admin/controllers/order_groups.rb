@@ -1,40 +1,64 @@
 Mingpai::Admin.controllers :order_groups do
 
+  #服务器 订单 归类列表
   get :brush do
     @group_result = ActiveRecord::Base.connection.
-      execute("SELECT count(*) as num,t2.`name`,t2.`id` FROM `orders` t1,`departments` t2 where t1.`department_id`=t2.`id` AND t1.`order_status_id`=2 AND t1.`type_id` = 2  GROUP BY department_id")
+      execute("SELECT count(*) as num,t2.`name`,t2.`id` FROM `orders` t1,`departments` t2 where t1.`department_id`=t2.`id` AND t1.`order_status_id`=2 AND t1.`type_id` = 1  GROUP BY department_id")
     render 'order_groups/brush'
   end
   
+  #订单列表
   get :brush_department, :with => :department_id do
-    @orders = Order.where("order_status_id = ? and department_id = ? and type_id = ? ",2,params[:department_id],2)
+    @orders = Order.where("order_status_id = ? and department_id = ? and type_id = ? ",2,params[:department_id],1)
     @department = Department.find(params[:department_id])
+    department_ing = OrderGroup.where("status_id in (3,4) and department_id = ? and type_id = 1",params[:department_id])
+    @dept_array = department_ing.map{|d| ["#{d.name}#{d.department.name}#{d.no}团",d.id]}
     render 'order_groups/brush_department'
   end
   
+  #订单分组
   post :brush_distribution do
     department_id = params[:department_id]
     order_ids = params[:order_ids]
     order_id_array = order_ids.split(",")
     group_date = params[:group_date]
     
-    @group = OrderGroup.new(:name => group_date,:department_id => department_id, :type_id => 2)
+    @group = OrderGroup.new(:name => group_date,:department_id => department_id, :type_id => 1)
     
     if @group.save
+      OrderGroupProcess.create({"group_id" => @group.id, "operator_id" => current_account.id, "remark" => "创建了新的团队"})
       Order.find(order_id_array).each do |o|
         o.update_attributes({"order_group_id" => @group.id,"order_status_id" => 3})
+        OrderProcess.create({"order_id" => o.id, "operator_id" => current_account.id, "remark" => "将订单分入#{@group.name}#{@group.department.name}#{@group.no}团"})
       end
       flash[:success] = "分组成功"
-      redirect url(:order_groups,:brush)
     else
       flash[:error] = "分组失败"
-      redirect url(:order_groups,:brush_department,:department_id => department_id)
+      
     end
+    redirect url(:order_groups,:brush_department,:department_id => department_id)
     
   end
   
+  post :goto_group do
+    order_group = OrderGroup.find(params[:group_id])
+    order = Order.find(params[:order_id])
+    
+    order.status = order_group.status
+    order.order_group = order_group
+    if order.save
+      OrderProcess.create({"order_id" => order.id, "operator_id" => current_account.id, "remark" => "将订单分入#{order_group.name}#{order_group.department.name}#{order_group.no}团"})
+      
+      flash[:success] = "分组成功"
+    else
+      flash[:error] = "分组失败"
+    end
+    redirect url(:order_groups,:brush_department,:department_id => params[:group_id])
+  end
+  
+  #团队列表
   get :brush_group do
-    @groups = OrderGroup.where("type_id = ? and status_id in (3,4)",2)
+    @groups = OrderGroup.where("type_id = ? and status_id in (3,4)",1)
     
     @groups.each do |g|
       if g.now_level
@@ -47,6 +71,7 @@ Mingpai::Admin.controllers :order_groups do
     render 'order_groups/brush_group'
   end
   
+  #团队详情
   get :brush_group_view, :with => :id do
     @group = OrderGroup.find(params[:id])
     @orders = @group.orders
@@ -68,10 +93,14 @@ Mingpai::Admin.controllers :order_groups do
     group = OrderGroup.find(params[:id])
     group.now_level = params[:level].to_i
     if group.save
+      OrderGroupProcess.create({"group_id" => group.id, "operator_id" => current_account.id, "remark" => "更新团队等级至#{group.now_level}"})
+      
       group.orders.each do |o|
         if o.now_level < params[:level].to_i
           o.now_level = params[:level].to_i
           o.save
+          OrderProcess.create({"order_id" => o.id, "operator_id" => current_account.id, "remark" => "将订单等级更新为#{o.now_level}"})
+          
         end
       end
       flash[:success] = "分组成功"
@@ -84,8 +113,10 @@ Mingpai::Admin.controllers :order_groups do
   put :update_step, :with => :id do
     group = OrderGroup.find(params[:id])
     task = OrderGroupTask.new(:group_id => params[:id],
-                                                        :step_id  => params[:step_id],
-                                                        :oper_id => current_account.id)
+                              :step_id  => params[:step_id],
+                              :oper_id => current_account.id)
+    step = Step.find(params[:step_id])
+                                                        
     if task.save
       group.orders.each do |o|
         ot = OrderTask.new(:group_id => params[:id],
@@ -93,6 +124,8 @@ Mingpai::Admin.controllers :order_groups do
                                      :step_id  => params[:step_id],
                                      :oper_id => current_account.id)
         ot.save
+        OrderProcess.create({"order_id" => o.id, "operator_id" => current_account.id, "remark" => "完成#{step.name}"})
+        
       end
       flash[:success] = "成功"
     else
@@ -115,14 +148,19 @@ Mingpai::Admin.controllers :order_groups do
   
   put :update_status, :with => :id do
     group = OrderGroup.find(params[:id])
-    group.status = Status.find(params[:status_id])
+    status = Status.find(params[:status_id])
+    group.status = status
     if group.status == 4
       group.now_level = 0
     end
     if group.save
+      OrderGroupProcess.create({"group_id" => group.id, "operator_id" => current_account.id, "remark" => "更新团队状态为#{status.name}"})
+      
       group.orders.each do |o|
         o.status=Status.find(params[:status_id])
         o.save
+        OrderProcess.create({"order_id" => o.id, "operator_id" => current_account.id, "remark" => "更新订单状态为#{status.name}"})
+        
       end
     end
     redirect url(:order_groups, :brush_group)

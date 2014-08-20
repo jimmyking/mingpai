@@ -51,4 +51,8 @@
       %td.list-column=@order.memo
       
 =partial 'orders/process', :locals => { :processes => @order.processes }
-    
+
+= form_for :order_process, url(:orders, :add_process), :method => :post, :class => 'form-horizontal' do |f|
+  =f.hidden_field :order_id, :value => @order.id
+  =partial 'orders/process_form', :locals => { :f => f }
+  

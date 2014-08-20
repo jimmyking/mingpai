@@ -1,3 +1,9 @@
+%ol.breadcrumb
+  %li
+    =link_to "团队处理列表", url(:order_groups, :brush_group)
+  %li.active
+    =link_to "团队详情"
+
 .row
   -if(@group.status.id == 4) 
     .row
@@ -55,7 +61,8 @@
       %tbody
         -@orders.each do |order|
           %tr.list-row
-            %td.list-column=order.order_no
+            %td.list-column
+              =link_to order.order_no, :href => url(:orders, :view, :id => order.id), :target => "_blank"
             %td.list-column=order.type.name
             %td.list-column=order.status.name
             %td.list-column=order.department.name

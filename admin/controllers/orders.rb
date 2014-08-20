@@ -1,7 +1,7 @@
 Mingpai::Admin.controllers :orders do
   get :index do
     empty_type = Type.new({:name => ""})
-    @types = Type.where("id != 1").to_a.insert 0, empty_type
+    @types = Type.all.to_a.insert 0, empty_type
     
     empty_department = Department.new({:name => ""})
     @departments = Department.all.to_a.insert 0, empty_department
@@ -20,7 +20,7 @@ Mingpai::Admin.controllers :orders do
   get :new do
     @title = pat(:new_title, :model => 'order')
     @departments = Game.first.departments
-    @types = Type.where("id != 1")
+    @types = Type.all
     @order = Order.new
     render 'orders/new'
   end
@@ -34,7 +34,7 @@ Mingpai::Admin.controllers :orders do
       params[:save_and_continue] ? redirect(url(:orders, :index)) : redirect(url(:orders, :edit, :id => @order.id))
     else
       @title = pat(:create_title, :model => 'order')
-      @types = Type.where("id != 1")
+      @types = Type.all
       flash.now[:error] = pat(:create_error, :model => 'order')
       render 'orders/new'
     end
@@ -56,7 +56,7 @@ Mingpai::Admin.controllers :orders do
     @title = pat(:edit_title, :model => "order #{params[:id]}")
     @order = Order.find(params[:id])
     @departments = Game.first.departments
-    @types = Type.where("id != 1")
+    @types = Type.all
     if @order
       render 'orders/edit'
     else
@@ -119,7 +119,7 @@ Mingpai::Admin.controllers :orders do
   
   get :new_orders do
     empty_type = Type.new({:name => ""})
-    @types = Type.where("id != 1").to_a.insert 0, empty_type
+    @types = Type.all.to_a.insert 0, empty_type
     
     empty_department = Department.new({:name => ""})
     @departments = Department.all.to_a.insert 0, empty_department
@@ -150,16 +150,29 @@ Mingpai::Admin.controllers :orders do
 
   put :to_issue do
     order = Order.find(params[:model_id])
-    order.type = Type.first
     order.issue_type = IssueType.find(params[:issus_type])
     order.issue_memo = params[:issus_memo]
     if order.save
-      OrderProcess.create({"order_id" => order.id, "operator_id" => current_account.id, "remark" => "修改订单为异常订单"})
+      OrderProcess.create({"order_id" => order.id, "operator_id" => current_account.id, "remark" => "修改订单为异常订单 备注：#{order.issue_memo}"})
       flash[:success] = "成功"
       redirect url(:orders, :new_orders)
     else
       flash[:error] = "失败"
       redirect url(:orders, :new_orders)
+    end
+  end
+  
+  put :un_issue, :with => :id do
+    order = Order.find(params[:id])
+    order.issue_type = nil
+    order.issue_memo = nil
+    if order.save
+      OrderProcess.create({"order_id" => order.id, "operator_id" => current_account.id, "remark" => "解除异常订单"})
+      flash[:success] = "成功"
+      redirect url(:orders, :issue_orders)
+    else
+      flash[:error] = "失败"
+      redirect url(:orders, :issue_orders)
     end
   end
   
@@ -170,10 +183,23 @@ Mingpai::Admin.controllers :orders do
     else
       params[:q]={}
     end
-    params[:q][:type_id_eq] = 1
+    params[:q][:issue_type_id_present] = 1
     @orders = Order.search(params[:q]).result
     render 'orders/issue_orders'
   end
+  
+  post :add_process do
+    @process = OrderProcess.new(params[:order_process])
+    @process.operator = current_account
+    if @process.save
+      redirect request.referer
+    end
+  end
+  
+  
+  
+  
+  
 
   get :distribution do
     @orders = Order.audited

@@ -30,7 +30,6 @@ game = Game.create(:name => "剑网三")
 dep1 = Department.create(:name => "双梦",:game_id => game.id)
 dep2 = Department.create(:name => "幽月",:game_id => game.id)
 
-type1 = Type.create(:name => "异常")
 type = Type.create(:name => "刷怪")
 step1 = Step.create(:name => "20级别", :level => 20, :type_id => type.id)
 step2 = Step.create(:name => "80级别", :level => 80, :type_id => type.id) 

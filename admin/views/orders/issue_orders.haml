@@ -69,6 +69,12 @@
             .list-row-action-wrapper
               =link_to tag_icon(:edit), :href => url(:orders, :edit, :id => order.id), :rel => :tooltip, :title => "查看", :class => 'list-row-action-wrapper-link'
               =link_to tag_icon(:file), :href => url(:orders, :view, :id => order.id), :rel => :tooltip, :title => "查看", :class => 'list-row-action-wrapper-link'
-              
-             
+              =link_to tag_icon("ok-sign"), :rel => :tooltip, :title => "解除异常", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
+              .popover.list-row-action-popover-delete-one.left
+                .arrow
+                %h3.popover-title="还原"
+                .popover-content
+                  = form_tag url(:orders, :un_issue, :id => order.id), :method => :put do
+                    =submit_tag "确定", :class =>'list-row-action-popover-delete-one-btn btn btn-success btn-small'
+                    .btn.btn-default.btn-small.cancel="取消"
              

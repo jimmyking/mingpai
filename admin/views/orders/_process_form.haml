@@ -1,0 +1,9 @@
+- error = @order.errors.include?(:remark)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label "备注", :class => 'control-label'
+  .controls
+    =f.text_field :remark, :class => 'form-control input-large input-with-feedback'
+    %span.help-inline=error ? f.error_message_on(:remark, :class => 'text-error') : ""
+%br
+.form-actions
+  =f.submit "保存", :class => 'btn btn-info', :name => 'save_and_continue'
