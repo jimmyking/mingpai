@@ -1,0 +1,81 @@
+%ol.breadcrumb
+  %li.active
+    =link_to "订单列表"
+.panel
+  = form_tag url(:orders, :index), :method => :get, :class => "form-horizontal" do
+    .form-group
+      =label_tag "订单号", :class => 'col-md-1 control-label'
+      .col-md-2
+        =text_field_tag "q[order_no_eq]", :class => 'form-control'
+
+      =label_tag "订单类型", :class => 'col-md-1 control-label'
+      .col-md-2
+        =select_tag "q[type_id_eq]", :collection => @types, :fields => [:name, :id], :class => 'form-control'
+
+      =label_tag "服务器", :class => 'col-md-1 control-label'
+      .col-md-2
+        =select_tag "q[department_id_eq]", :collection => @departments, :fields => [:name, :id], :class => 'form-control'
+
+      =label_tag "角色", :class => 'col-md-1 control-label'
+      .col-md-2
+        =text_field_tag "q[acter_cont]", :class => 'form-control'
+    .form-group
+      .col-md-2.col-md-offset-10
+        =submit_tag "搜索", :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
+
+%ul.nav.nav-tabs
+  %li.active=link_to tag_icon(:list, "列表"), url(:orders, :index)
+  %li=link_to tag_icon(:plus, "新增"), url(:orders, :new)
+
+
+.tabs-content
+  %table#list.table.table-bordered.table-hover.table-condensed
+    %thead
+      %th.header= "订单号"
+      %th.header= "订单类型"
+      %th.header= "订单状态"
+      %th.header= "服务器"
+      %th.header= "角色"
+      %th.header= "初始等级"
+      %th.header= "需求" 
+      %th.header= "帐号" 
+      %th.header= "密码"
+      %th.header= "旺旺" 
+      %th.header= "电话" 
+      %th.header= mat(:order, :qq)
+      %th.header= "金额"
+      %th.header= "支付方式"
+      %th.header= "备注" 
+      %th.header= "创建时间" 
+      %th.header.list-row-action-header
+
+    %tbody
+      -@orders.each do |order|
+        %tr.list-row
+          %td.list-column=order.order_no
+          %td.list-column=order.type.name
+          %td.list-column=order.status.name
+          %td.list-column=order.department.name
+          %td.list-column=order.acter
+          %td.list-column=order.start_level
+          %td.list-column=order.end_level
+          %td.list-column=order.acter_account
+          %td.list-column=order.acter_pw
+          %td.list-column=order.wangwang
+          %td.list-column=order.mobile
+          %td.list-column=order.qq
+          %td.list-column=order.amount
+          %td.list-column=order.paytype
+          %td.list-column=order.memo
+          %td.list-column=order.created_at.strftime("%Y-%m-%d %H:%M")
+          %td.list-column.list-row-action
+            .list-row-action-wrapper
+              =link_to tag_icon(:edit), :href => url(:orders, :edit, :id => order.id), :rel => :tooltip, :title => "#{pat(:edit)} order", :class => 'list-row-action-wrapper-link'
+              =link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} order", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
+              .popover.list-row-action-popover-delete-one.left
+                .arrow
+                %h3.popover-title="删除"
+                .popover-content
+                  = form_tag url(:orders, :destroy, :id => order.id), :method => :delete do
+                    =submit_tag "确定", :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
+                    .btn.btn-default.btn-small.cancel="取消"

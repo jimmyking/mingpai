@@ -134,18 +134,6 @@ Mingpai::Admin.controllers :order_groups do
     redirect url(:order_groups, :brush_group_view, :id => params[:id])
   end
   
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   put :update_status, :with => :id do
     group = OrderGroup.find(params[:id])
     status = Status.find(params[:status_id])

@@ -196,20 +196,25 @@ Mingpai::Admin.controllers :orders do
     end
   end
   
-  
+  def grouped_orders
+      empty_type = Type.new({:name => ""})
+    @types = Type.all.to_a.insert 0, empty_type
+    
+    empty_department = Department.new({:name => ""})
+    @departments = Department.all.to_a.insert 0, empty_department
+    
+    if params[:q] 
+    else
+      params[:q]={}
+    end
+    params[:q][:order_status_id_eq] = 1
+    
+    @orders = Order.search(params[:q]).result
+    render 'orders/grouped_orders'
+  end  
   
   
   
 
-  get :distribution do
-    @orders = Order.audited
-    render 'orders/distribution'
-  end
-  
-  put :distribed do
-    puts params[:menu_ids]
-    puts params[:group_date]
-    @orders = Order.audited
-    render 'orders/distribution'
-  end
+
 end
