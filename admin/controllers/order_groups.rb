@@ -53,7 +53,7 @@ Mingpai::Admin.controllers :order_groups do
     else
       flash[:error] = "分组失败"
     end
-    redirect url(:order_groups,:brush_department,:department_id => params[:group_id])
+    redirect request.referer
   end
   
   #团队列表

@@ -1,12 +1,16 @@
 %ol.breadcrumb
   %li.active
-    =link_to "团队完成列表"
+    =link_to "订单查询"
 .panel
-  = form_tag url(:orders, :grouped_orders), :method => :get, :class => "form-horizontal" do
+  = form_tag url(:orders, :search), :method => :get, :class => "form-horizontal" do
     .form-group
       =label_tag "订单号", :class => 'col-md-1 control-label'
       .col-md-2
         =text_field_tag "q[order_no_eq]", :class => 'form-control'
+        
+      =label_tag "订单状态", :class => 'col-md-1 control-label'
+      .col-md-2
+        =select_tag "q[status_id_eq]", :collection => @statuses, :fields => [:name, :id], :class => 'form-control'
 
       =label_tag "订单类型", :class => 'col-md-1 control-label'
       .col-md-2
@@ -16,11 +20,14 @@
       .col-md-2
         =select_tag "q[department_id_eq]", :collection => @departments, :fields => [:name, :id], :class => 'form-control'
 
+      
+    .form-group
+    
       =label_tag "角色", :class => 'col-md-1 control-label'
       .col-md-2
         =text_field_tag "q[acter_cont]", :class => 'form-control'
-    .form-group
-      .col-md-2.col-md-offset-10
+    
+      .col-md-2.col-md-offset-7
         =submit_tag "搜索", :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
 
 
@@ -65,29 +72,4 @@
           %td.list-column=order.paytype
           %td.list-column=order.memo
           %td.list-column=order.created_at.strftime("%Y-%m-%d %H:%M")
-          %td.list-column.list-row-action
-            .list-row-action-wrapper
-              =link_to tag_icon("question-sign"), :'data-order-id' => order.id, :class => 'list-row-action-wrapper-link btn-to-group'
-              =link_to tag_icon("ok-sign"), :rel => :tooltip, :title => "订单完成", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
-              .popover.list-row-action-popover-delete-one.left
-                .arrow
-                %h3.popover-title="订单完成"
-                .popover-content
-                  = form_tag url(:orders, :over, :id => order.id), :method => :put do
-                    =submit_tag "确认", :class =>'list-row-action-popover-delete-one-btn btn btn-success btn-small'
-                    .btn.btn-default.btn-small.cancel="取消"
-.modal.fade{:id => "gotogroupModel", :role => "dialog", :tabindex => "-1", :'aria-labelledby' => "myModalLabel", :'aria-hidden' => "true"}
-  .modal-dialog
-    .modal-content
-      = form_tag url(:order_groups, :goto_group), :method => :post do
-        .modal-header="订单分组"
-        .modal-body
-          %fieldset.control-group
-            =label_tag "服务器名称", :class => 'control-label'
-            .controls
-              =select_tag :group_id,:options => @dept_array, :class => 'form-control'
-            
-          =hidden_field_tag :order_id, :id => "order_id"
-        .modal-footer
-          %button.btn.btn-default{:type => "button",:"data-dismiss" => "modal"}="关闭"
-          =submit_tag "保存", :class =>' btn btn-primary'
+          
