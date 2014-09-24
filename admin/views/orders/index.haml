@@ -37,16 +37,16 @@
       %th.header= "服务器"
       %th.header= "角色"
       %th.header= "初始等级"
-      %th.header= "需求" 
-      %th.header= "帐号" 
+      %th.header= "需求"
+      %th.header= "帐号"
       %th.header= "密码"
-      %th.header= "旺旺" 
-      %th.header= "电话" 
+      %th.header= "旺旺"
+      %th.header= "电话"
       %th.header= mat(:order, :qq)
       %th.header= "金额"
       %th.header= "支付方式"
-      %th.header= "备注" 
-      %th.header= "创建时间" 
+      %th.header= "备注"
+      %th.header= "创建时间"
       %th.header.list-row-action-header
 
     %tbody
@@ -71,6 +71,14 @@
           %td.list-column.list-row-action
             .list-row-action-wrapper
               =link_to tag_icon(:edit), :href => url(:orders, :edit, :id => order.id), :rel => :tooltip, :title => "#{pat(:edit)} order", :class => 'list-row-action-wrapper-link'
+              =link_to tag_icon("ok-sign"), :rel => :tooltip, :title => "审核", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
+              .popover.list-row-action-popover-delete-one.left
+                .arrow
+                %h3.popover-title="审核"
+                .popover-content
+                  = form_tag url(:orders, :audit, :id => order.id), :method => :put do
+                    =submit_tag "审核通过", :class =>'list-row-action-popover-delete-one-btn btn btn-success btn-small'
+                    .btn.btn-default.btn-small.cancel="取消"
               =link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} order", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
               .popover.list-row-action-popover-delete-one.left
                 .arrow

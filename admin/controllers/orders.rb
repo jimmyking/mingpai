@@ -2,16 +2,16 @@ Mingpai::Admin.controllers :orders do
   get :index do
     empty_type = Type.new({:name => ""})
     @types = Type.all.to_a.insert 0, empty_type
-    
+
     empty_department = Department.new({:name => ""})
     @departments = Department.all.to_a.insert 0, empty_department
-    
-    if params[:q] 
+
+    if params[:q]
     else
       params[:q]={}
     end
     params[:q][:order_status_id_eq] = 1
-    
+
     @orders = Order.search(params[:q]).result
     render 'orders/index'
   end
@@ -39,11 +39,11 @@ Mingpai::Admin.controllers :orders do
       render 'orders/new'
     end
   end
-  
+
   get :view, :with => :id do
-    
+
     @order = Order.find(params[:id])
-  
+
     if @order
       render 'orders/view'
     else
@@ -109,42 +109,42 @@ Mingpai::Admin.controllers :orders do
     end
     ids = params[:order_ids].split(',').map(&:strip)
     orders = Order.find(ids)
-    
+
     if Order.destroy orders
-    
+
       flash[:success] = pat(:destroy_many_success, :model => 'Orders', :ids => "#{ids.to_sentence}")
     end
     redirect url(:orders, :index)
   end
-  
+
   get :new_orders do
     empty_type = Type.new({:name => ""})
     @types = Type.all.to_a.insert 0, empty_type
-    
+
     empty_department = Department.new({:name => ""})
     @departments = Department.all.to_a.insert 0, empty_department
-    
-    if params[:q] 
+
+    if params[:q]
     else
       params[:q]={}
     end
     params[:q][:order_status_id_eq] = 1
-    
+
     @orders = Order.search(params[:q]).result
     @issue_types = IssueType.all
     render 'orders/audit'
   end
-  
+
   put :audit, :with => :id do
     order = Order.find(params[:id])
     order.status = Status.find(2)
     if order.save
       OrderProcess.create({"order_id" => order.id, "operator_id" => current_account.id, "remark" => "审核订单"})
       flash[:success] = "审核成功"
-      redirect url(:orders, :new_orders)
+      redirect request.referer
     else
       flash[:error] = "审核失败"
-      redirect url(:orders, :new_orders)
+      redirect request.referer
     end
   end
 
@@ -161,7 +161,7 @@ Mingpai::Admin.controllers :orders do
       redirect url(:orders, :new_orders)
     end
   end
-  
+
   put :un_issue, :with => :id do
     order = Order.find(params[:id])
     order.issue_type = nil
@@ -175,11 +175,11 @@ Mingpai::Admin.controllers :orders do
       redirect url(:orders, :issue_orders)
     end
   end
-  
+
   get :issue_orders do
     empty_department = Department.new({:name => ""})
     @departments = Department.all.to_a.insert 0, empty_department
-    if params[:q] 
+    if params[:q]
     else
       params[:q]={}
     end
@@ -187,7 +187,7 @@ Mingpai::Admin.controllers :orders do
     @orders = Order.search(params[:q]).result
     render 'orders/issue_orders'
   end
-  
+
   post :add_process do
     @process = OrderProcess.new(params[:order_process])
     @process.operator = current_account
@@ -195,27 +195,27 @@ Mingpai::Admin.controllers :orders do
       redirect request.referer
     end
   end
-  
+
   get :grouped_orders do
     empty_type = Type.new({:name => ""})
     @types = Type.all.to_a.insert 0, empty_type
-    
+
     empty_department = Department.new({:name => ""})
     @departments = Department.all.to_a.insert 0, empty_department
-    
-    if params[:q] 
+
+    if params[:q]
     else
       params[:q]={}
     end
     params[:q][:order_status_id_eq] = 5
-    
+
     @orders = Order.search(params[:q]).result
-    
+
     department_ing = OrderGroup.where("status_id in (3,4) and type_id = 1")
     @dept_array = department_ing.map{|d| ["#{d.name}#{d.department.name}#{d.no}团",d.id]}
     render 'orders/grouped_orders'
   end
-  
+
   put :over, :with => :id do
     order = Order.find(params[:id])
     order.status = Status.find(6)
@@ -223,32 +223,32 @@ Mingpai::Admin.controllers :orders do
       OrderProcess.create({"order_id" => order.id, "operator_id" => current_account.id, "remark" => "订单已完成"})
       flash[:success] = "成功"
     else
-      flash[:error] = "失败" 
+      flash[:error] = "失败"
     end
     redirect url(:orders, :grouped_orders)
   end
-  
-  
+
+
   get :search do
     empty_type = Type.new({:name => ""})
     @types = Type.all.to_a.insert 0, empty_type
-    
+
     empty_department = Department.new({:name => ""})
     @departments = Department.all.to_a.insert 0, empty_department
-    
+
     empty_status = Status.new({:name => ""})
     @statuses = Status.all.to_a.insert 0,empty_status
-    if params[:q] 
+    if params[:q]
     else
       params[:q]={}
     end
-    
+
     @orders = Order.search(params[:q]).result
-    
+
     department_ing = OrderGroup.where("status_id in (3,4) and type_id = 1")
     @dept_array = department_ing.map{|d| ["#{d.name}#{d.department.name}#{d.no}团",d.id]}
     render 'orders/search'
   end
-  
-  
+
+
 end
