@@ -26,26 +26,27 @@
         %th.header= "服务器"
         %th.header= "角色"
         %th.header= "初始等级"
-        %th.header= "需求" 
-        %th.header= "帐号" 
+        %th.header= "需求"
+        %th.header= "帐号"
         %th.header= "密码"
-        %th.header= "旺旺" 
-        %th.header= "电话" 
+        %th.header= "旺旺"
+        %th.header= "电话"
         %th.header= mat(:order, :qq)
         %th.header= "金额"
         %th.header= "支付方式"
-        %th.header= "备注" 
-        %th.header= "创建时间" 
+        %th.header= "备注"
+        %th.header= "创建时间"
         %th.header.list-row-action-header
 
-     
+
 
     %tbody
       -@orders.each do |order|
-        %tr.list-row
+        %tr.list-row{:class => ("danger" if order.issue_type)}
           %td.list-column.list-selectable
             =check_box_tag 'order_ids[]', :value => order.id, :class => 'list-selectable-checkbox'
-          %td.list-column=order.order_no
+          %td.list-column
+            =link_to order.order_no, :href => url(:orders, :view, :id => order.id), :target => "_blank"
           %td.list-column=order.type.name
           %td.list-column=order.status.name
           %td.list-column=order.department.name
@@ -63,8 +64,39 @@
           %td.list-column=order.created_at.strftime("%Y-%m-%d %H:%M")
           %td.list-column.list-row-action
             .list-row-action-wrapper
-              =link_to tag_icon("question-sign"), :'data-order-id' => order.id, :class => 'list-row-action-wrapper-link btn-to-group'
-  
+              =link_to tag_icon("magnet"), :'data-order-id' => order.id, :class => 'list-row-action-wrapper-link btn-to-group'
+              -unless order.issue_type
+                =link_to tag_icon("question-sign"), :rel => :tooltip, :title => "异常", :"data-toggle" => "modal", :"data-b-id" => order.id, :"data-target" => "#errorModel", :class => 'list-row-action-wrapper-link show_modal'
+.modal.fade{:id => "errorModel", :role => "dialog", :tabindex => "-1", :'aria-labelledby' => "myModalLabel", :'aria-hidden' => "true"}
+  .modal-dialog
+    .modal-content
+      = form_tag url(:orders, :to_issue), :method => :put do
+        .modal-header="订单异常"
+        .modal-body
+          %fieldset.control-group
+            =label_tag "异常类型", :class => 'control-label'
+            .controls
+              =select_tag :issus_type,  :collection => @issue_types, :fields => [:name, :id], :class => 'form-control', :autofocus => true
+
+          %fieldset.control-group
+            =label_tag "异常备注", :class => 'control-label'
+            .controls
+              =text_field_tag :issus_memo, :class => 'form-control input-large input-with-feedback'
+
+          =hidden_field_tag :model_id, :id => "model_id"
+        .modal-footer
+          %button.btn.btn-default{:type => "button",:"data-dismiss" => "modal"}="关闭"
+          =submit_tag "保存", :class =>' btn btn-primary'
+
+
+
+
+
+
+
+
+
+
 .modal.fade{:id => "groupModel", :role => "dialog", :tabindex => "-1", :'aria-labelledby' => "myModalLabel", :'aria-hidden' => "true"}
   .modal-dialog
     .modal-content
@@ -75,21 +107,21 @@
             =label_tag "服务器名称", :class => 'control-label'
             .controls
               =text_field_tag :department_name,:value => @department.name, :class => 'form-control input-large input-with-feedback'
-              
+
           %fieldset.control-group
             =label_tag "分组日期", :class => 'control-label'
             .controls
               .input-append
                 %input.date.form-control.form-date{"data-date" => "", "date-date-format" => "yyyy-mm-dd", "data-link-field" => "dtp_input2", "data-link-format" => "yyyy-mm-dd",:size => "10", :type => "text", :readonly => true}
-                
+
           =hidden_field_tag :group_date, :id =>"dtp_input2"
-          =hidden_field_tag :type_id, :value => 2    
+          =hidden_field_tag :type_id, :value => 2
           =hidden_field_tag :order_ids, :id => "order_ids"
           =hidden_field_tag :department_id, :value => params[:department_id]
         .modal-footer
           %button.btn.btn-default{:type => "button",:"data-dismiss" => "modal"}="关闭"
           =submit_tag "保存", :class =>' btn btn-primary'
-         
+
 .modal.fade{:id => "gotogroupModel", :role => "dialog", :tabindex => "-1", :'aria-labelledby' => "myModalLabel", :'aria-hidden' => "true"}
   .modal-dialog
     .modal-content
@@ -100,9 +132,8 @@
             =label_tag "服务器名称", :class => 'control-label'
             .controls
               =select_tag :group_id,:options => @dept_array, :class => 'form-control'
-            
+
           =hidden_field_tag :order_id, :id => "order_id"
         .modal-footer
           %button.btn.btn-default{:type => "button",:"data-dismiss" => "modal"}="关闭"
           =submit_tag "保存", :class =>' btn btn-primary'
-         
