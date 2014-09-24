@@ -6,6 +6,7 @@ Mingpai::Admin.controllers :orders do
     empty_department = Department.new({:name => ""})
     @departments = Department.all.to_a.insert 0, empty_department
 
+    @issue_types = IssueType.all
     if params[:q]
     else
       params[:q]={}
@@ -155,10 +156,10 @@ Mingpai::Admin.controllers :orders do
     if order.save
       OrderProcess.create({"order_id" => order.id, "operator_id" => current_account.id, "remark" => "修改订单为异常订单 备注：#{order.issue_memo}"})
       flash[:success] = "成功"
-      redirect url(:orders, :new_orders)
+      redirect request.referer
     else
       flash[:error] = "失败"
-      redirect url(:orders, :new_orders)
+      redirect request.referer
     end
   end
 
