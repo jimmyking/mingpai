@@ -101,6 +101,10 @@ Mingpai::Admin.controllers :orders do
       halt 404
     end
   end
+  
+  
+  
+  
 
   delete :destroy_many do
     @title = "Orders"
@@ -215,6 +219,51 @@ Mingpai::Admin.controllers :orders do
     department_ing = OrderGroup.where("status_id in (3,4) and type_id = 1")
     @dept_array = department_ing.map{|d| ["#{d.name}#{d.department.name}#{d.no}团",d.id]}
     render 'orders/grouped_orders'
+  end
+  
+  delete :invalid do
+    @title = "Orders"
+    order = Order.find(params[:model_id])
+    memo = params[:delete_memo]
+    order.status = Status.find(7)
+    if order.save
+      OrderProcess.create({"order_id" => order.id, "operator_id" => current_account.id, "remark" => "订单删除 原因:#{memo}"})
+      flash[:success] = "成功"
+    else
+      flash[:error] = "失败"
+    end
+    redirect request.referer
+  end
+  
+  
+  get :invalid_orders do
+    empty_type = Type.new({:name => ""})
+    @types = Type.all.to_a.insert 0, empty_type
+
+    empty_department = Department.new({:name => ""})
+    @departments = Department.all.to_a.insert 0, empty_department
+
+    if params[:q]
+    else
+      params[:q]={}
+    end
+    params[:q][:order_status_id_eq] = 7
+
+    @orders = Order.search(params[:q]).result
+    @issue_types = IssueType.all
+    render 'orders/invalid'
+  end
+  
+  put :un_invalid, :with => :id do
+    order = Order.find(params[:id])
+    order.status = Status.find(1)
+    if order.save
+      OrderProcess.create({"order_id" => order.id, "operator_id" => current_account.id, "remark" => "还原订单"})
+      flash[:success] = "成功"
+    else
+      flash[:error] = "失败"
+    end
+    redirect url(:orders, :invalid_orders)
   end
 
   put :over, :with => :id do

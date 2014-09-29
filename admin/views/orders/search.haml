@@ -6,19 +6,19 @@
     .form-group
       =label_tag "订单号", :class => 'col-md-1 control-label'
       .col-md-2
-        =text_field_tag "q[order_no_eq]", :class => 'form-control'
+        =text_field_tag "q[order_no_eq]", :class => 'form-control',:value => params[:q][:order_no_eq]
         
       =label_tag "订单状态", :class => 'col-md-1 control-label'
       .col-md-2
-        =select_tag "q[status_id_eq]", :collection => @statuses, :fields => [:name, :id], :class => 'form-control'
+        =select_tag "q[status_id_eq]", :collection => @statuses, :fields => [:name, :id], :class => 'form-control',:value => params[:q][:status_id_eq]
 
       =label_tag "订单类型", :class => 'col-md-1 control-label'
       .col-md-2
-        =select_tag "q[type_id_eq]", :collection => @types, :fields => [:name, :id], :class => 'form-control'
+        =select_tag "q[type_id_eq]", :collection => @types, :fields => [:name, :id], :class => 'form-control',:value => params[:q][:type_id_eq]
 
       =label_tag "服务器", :class => 'col-md-1 control-label'
       .col-md-2
-        =select_tag "q[department_id_eq]", :collection => @departments, :fields => [:name, :id], :class => 'form-control'
+        =select_tag "q[department_id_eq]", :collection => @departments, :fields => [:name, :id], :class => 'form-control',:value => params[:q][:department_id_eq]
 
       
     .form-group

@@ -23,10 +23,11 @@ menu14 = Menu.create(:name => "刷怪团处理",:url => "/order_groups/brush_gro
 menu15 = Menu.create(:name => "异常订单管理",:url => "/orders/issue_orders", :parent_id => menu9.id)
 menu16 = Menu.create(:name => "团队完成列表",:url => "/orders/grouped_orders", :parent_id => menu9.id)
 menu17 = Menu.create(:name => "订单查询",:url => "/orders/search", :parent_id => menu9.id)
+menu18 = Menu.create(:name => "订单回收站",:url => "/orders/invalid_orders", :parent_id => menu9.id)
 
 
 role = Role.new(:name => "管理员")
-role.menus = [menu2,menu3,menu4,menu6,menu7,menu8,menu11,menu12,menu13,menu14,menu15,menu16,menu17]
+role.menus = [menu2,menu3,menu4,menu6,menu7,menu8,menu11,menu12,menu13,menu14,menu15,menu16,menu17,menu18]
 role.save
 
 game = Game.create(:name => "剑网三")
@@ -43,6 +44,7 @@ Status.create(:name => "已分团")
 Status.create(:name => "已开团")
 Status.create(:name => "团结束")
 Status.create(:name => "已完成")
+Status.create(:name => "已删除")
 
 
 

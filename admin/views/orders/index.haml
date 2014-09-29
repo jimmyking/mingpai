@@ -6,19 +6,19 @@
     .form-group
       =label_tag "订单号", :class => 'col-md-1 control-label'
       .col-md-2
-        =text_field_tag "q[order_no_eq]", :class => 'form-control'
+        =text_field_tag "q[order_no_eq]", :class => 'form-control',:value => params[:q][:order_no_eq]
 
       =label_tag "订单类型", :class => 'col-md-1 control-label'
       .col-md-2
-        =select_tag "q[type_id_eq]", :collection => @types, :fields => [:name, :id], :class => 'form-control'
+        =select_tag "q[type_id_eq]", :collection => @types, :fields => [:name, :id], :class => 'form-control' ,:value => params[:q][:type_id_eq]
 
       =label_tag "服务器", :class => 'col-md-1 control-label'
       .col-md-2
-        =select_tag "q[department_id_eq]", :collection => @departments, :fields => [:name, :id], :class => 'form-control'
+        =select_tag "q[department_id_eq]", :collection => @departments, :fields => [:name, :id], :class => 'form-control',:value => params[:q][:department_id_eq]
 
       =label_tag "角色", :class => 'col-md-1 control-label'
       .col-md-2
-        =text_field_tag "q[acter_cont]", :class => 'form-control'
+        =text_field_tag "q[acter_cont]", :class => 'form-control',:value => params[:q][:acter_cont]
     .form-group
       .col-md-2.col-md-offset-10
         =submit_tag "搜索", :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
@@ -52,7 +52,8 @@
     %tbody
       - @orders.each do |order|
         %tr.list-row{:class => ("danger" if order.issue_type)}
-          %td.list-column=order.order_no
+          %td.list-column
+            =link_to order.order_no, :href => url(:orders, :view, :id => order.id), :target => "_blank"
           %td.list-column=order.type.name
           %td.list-column=order.status.name
           %td.list-column=order.department.name
@@ -79,14 +80,8 @@
                   = form_tag url(:orders, :audit, :id => order.id), :method => :put do
                     =submit_tag "审核通过", :class =>'list-row-action-popover-delete-one-btn btn btn-success btn-small'
                     .btn.btn-default.btn-small.cancel="取消"
-              =link_to tag_icon(:trash), :rel => :tooltip, :title => "#{pat(:delete)} order", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
-              .popover.list-row-action-popover-delete-one.left
-                .arrow
-                %h3.popover-title="删除"
-                .popover-content
-                  = form_tag url(:orders, :destroy, :id => order.id), :method => :delete do
-                    =submit_tag "确定", :class =>'list-row-action-popover-delete-one-btn btn btn-danger btn-small'
-                    .btn.btn-default.btn-small.cancel="取消"
+              =link_to tag_icon(:trash), :rel => :tooltip, :title => "删除", :"data-toggle" => "modal", :"data-b-id" => order.id, :"data-target" => "#deleteModel", :class => 'list-row-action-wrapper-link show_modal'
+              
               -unless order.issue_type
                 =link_to tag_icon("question-sign"), :rel => :tooltip, :title => "异常", :"data-toggle" => "modal", :"data-b-id" => order.id, :"data-target" => "#errorModel", :class => 'list-row-action-wrapper-link show_modal'
 .modal.fade{:id => "errorModel", :role => "dialog", :tabindex => "-1", :'aria-labelledby' => "myModalLabel", :'aria-hidden' => "true"}
@@ -104,6 +99,22 @@
             =label_tag "异常备注", :class => 'control-label'
             .controls
               =text_field_tag :issus_memo, :class => 'form-control input-large input-with-feedback'
+
+          =hidden_field_tag :model_id, :id => "model_id"
+        .modal-footer
+          %button.btn.btn-default{:type => "button",:"data-dismiss" => "modal"}="关闭"
+          =submit_tag "保存", :class =>' btn btn-primary'
+          
+.modal.fade{:id => "deleteModel", :role => "dialog", :tabindex => "-1", :'aria-labelledby' => "myModalLabel", :'aria-hidden' => "true"}
+  .modal-dialog
+    .modal-content
+      = form_tag url(:orders, :invalid), :method => :delete do
+        .modal-header="删除"
+        .modal-body
+          %fieldset.control-group
+            =label_tag "说明", :class => 'control-label'
+            .controls
+              =text_field_tag :delete_memo, :class => 'form-control input-large input-with-feedback'
 
           =hidden_field_tag :model_id, :id => "model_id"
         .modal-footer
