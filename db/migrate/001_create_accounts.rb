@@ -7,6 +7,7 @@ class CreateAccounts < ActiveRecord::Migration
       t.string :crypted_password
       t.string :role
       t.integer :role_id
+      t.integer :is_edit
       t.timestamps
     end
   end

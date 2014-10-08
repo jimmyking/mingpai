@@ -29,6 +29,12 @@
   .controls
     =f.select :role_id, :collection => @roles, :fields => [:name, :id], :class => 'form-control'
     %span.help-inline=error ? f.error_message_on(:role_id, :class => 'text-error') : ""
+- error = @account.errors.include?(:is_edit)
+%fieldset.control-group{:class => error ? 'has-error' : ''}
+  =f.label "是否可编辑订单", :class => 'control-label'
+  .controls
+    =f.check_box :is_edit, :class => 'form-control'
+    %span.help-inline=error ? f.error_message_on(:is_edit, :class => 'text-error') : ""
 %br/
 .form-actions
   =f.submit "保存", :class => 'btn btn-primary'

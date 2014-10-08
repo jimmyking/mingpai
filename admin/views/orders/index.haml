@@ -64,14 +64,17 @@
           %td.list-column=order.acter_pw
           %td.list-column=order.wangwang
           %td.list-column=order.mobile
-          %td.list-column=order.qq
+          %td.list-column
+            =order.qq
+            =link_to "qq交流", :href => "http://wpa.qq.com/msgrd?v=3&uin=#{order.qq}&site=qq&menu=yes", :target => "_blank"
           %td.list-column=order.amount
           %td.list-column=order.paytype
           %td.list-column=order.memo
           %td.list-column=order.created_at.strftime("%Y-%m-%d %H:%M")
           %td.list-column.list-row-action
             .list-row-action-wrapper
-              =link_to tag_icon(:edit), :href => url(:orders, :edit, :id => order.id), :rel => :tooltip, :title => "#{pat(:edit)} order", :class => 'list-row-action-wrapper-link'
+              -if @current_account.is_edit.to_i == 1
+                =link_to tag_icon(:edit), :href => url(:orders, :edit, :id => order.id), :rel => :tooltip, :title => "#{pat(:edit)} order", :class => 'list-row-action-wrapper-link'
               =link_to tag_icon("ok-sign"), :rel => :tooltip, :title => "审核", :class => 'list-row-action-delete-one list-row-action-wrapper-link'
               .popover.list-row-action-popover-delete-one.left
                 .arrow
