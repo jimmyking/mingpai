@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 15) do
     t.string   "crypted_password"
     t.string   "role"
     t.integer  "role_id"
+    t.integer  "is_edit"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

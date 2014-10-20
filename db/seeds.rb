@@ -27,7 +27,7 @@ menu18 = Menu.create(:name => "订单回收站",:url => "/orders/invalid_orders"
 
 
 role = Role.new(:name => "管理员")
-role.menus = [menu2,menu3,menu4,menu6,menu7,menu8,menu11,menu12,menu13,menu14,menu15,menu16,menu17,menu18]
+role.menus = [menu2,menu3,menu4,menu6,menu7,menu8,menu10,menu12,menu13,menu14,menu15,menu16,menu17,menu18]
 role.save
 
 game = Game.create(:name => "剑网三")
@@ -55,7 +55,7 @@ password  = shell.ask "Tell me the password to use:"
 
 shell.say ""
 
-account = Account.create(:email => email, :name => "Foo", :surname => "Bar", :password => password, :password_confirmation => password, :role => :admin, :role_id => role.id)
+account = Account.create(:email => email, :name => "admin", :surname => "admin", :password => password, :password_confirmation => password, :role => :admin, :role_id => role.id, :is_edit => 1)
 
 if account.valid?
   shell.say "================================================================="
